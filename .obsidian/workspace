@@ -1,0 +1,158 @@
+{
+  "main": {
+    "id": "425ce122c5530991",
+    "type": "split",
+    "children": [
+      {
+        "id": "6db4dc246f06e1de",
+        "type": "leaf",
+        "state": {
+          "type": "image",
+          "state": {
+            "file": "Pasted image 20220825165809.png"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "17f0288329ad6d0a",
+    "type": "split",
+    "children": [
+      {
+        "id": "568bdb2f027b6f81",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7e9a8dd8cef8d1b1",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "2e21fe94243c1169",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "339c20cc81f81269",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e2303acfdb5f9d50",
+    "type": "split",
+    "children": [
+      {
+        "id": "ffbecf46b097f8c0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "80b2a4a726ab4b7f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Pasted image 20220825165809.png",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "c3ccced3909c8244",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false
+              }
+            }
+          },
+          {
+            "id": "89478d8afe2db1f3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Pasted image 20220825165809.png"
+              }
+            }
+          },
+          {
+            "id": "97071f8c4b58ea14",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "e829066f3661c506",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          },
+          {
+            "id": "7330e27689ca1a6e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Pasted image 20220825165809.png",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "active": "7e9a8dd8cef8d1b1",
+  "lastOpenFiles": [
+    "概念解释.md",
+    "Gitbook/Algorithm/数据结构.md",
+    "Gitbook/Algorithm/二叉树.md",
+    "强化学习/基础知识.md",
+    "强化学习/无模型预测.md",
+    "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
+    "深度学习/优化器.md",
+    "深度学习/损失函数.md",
+    "Pytorch.md",
+    "Pasted image 20220825165809.png"
+  ]
+}
