@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "6db4dc246f06e1de",
+        "id": "6c17ddd17e15bb5c",
         "type": "leaf",
         "state": {
           "type": "diff-view",
           "state": {
-            "file": ".obsidian/app.json",
+            "file": ".obsidian/workspace",
             "staged": false
           }
         }
@@ -83,7 +83,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "概念解释.md"
+              }
             }
           },
           {
@@ -119,6 +121,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "概念解释.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -130,6 +133,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "概念解释.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
