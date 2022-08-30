@@ -4,14 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6c17ddd17e15bb5c",
+        "id": "9e2c09ea77169563",
         "type": "leaf",
         "state": {
-          "type": "diff-view",
-          "state": {
-            "file": ".obsidian/workspace",
-            "staged": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -60,7 +57,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 266.5
   },
   "right": {
     "id": "e2303acfdb5f9d50",
@@ -83,9 +80,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "概念解释.md"
-              }
+              "state": {}
             }
           },
           {
@@ -121,7 +116,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "概念解释.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +127,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "概念解释.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,17 +143,17 @@
     "direction": "horizontal",
     "width": 375.5
   },
-  "active": "8c8ac699379c0381",
+  "active": "9e2c09ea77169563",
   "lastOpenFiles": [
-    "pytorch_intro.ipynb",
-    "Pytorch.md",
-    "Pytorch_advanced.ipynb",
-    "深度学习/损失函数.md",
+    "LeetCode/动态规划.md",
+    "未命名.md",
+    "LeetCode/二叉树.md",
+    "LeetCode/数据结构.md",
+    "强化学习/策略梯度.md",
+    "强化学习/无模型预测.md",
     "强化学习/重要公式.md",
-    "强化学习/PPO.md",
-    "Pasted image 20220825165809.png",
-    "概念解释.md",
-    "Gitbook/Algorithm/数据结构.md",
-    "Gitbook/Algorithm/二叉树.md"
+    "深度学习/优化器.md",
+    "深度学习/损失函数.md",
+    "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md"
   ]
 }
