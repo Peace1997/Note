@@ -7,9 +7,10 @@
         "id": "6db4dc246f06e1de",
         "type": "leaf",
         "state": {
-          "type": "image",
+          "type": "diff-view",
           "state": {
-            "file": "Pasted image 20220825165809.png"
+            "file": ".obsidian/app.json",
+            "staged": false
           }
         }
       }
@@ -70,26 +71,11 @@
         "type": "tabs",
         "children": [
           {
-            "id": "80b2a4a726ab4b7f",
+            "id": "8c8ac699379c0381",
             "type": "leaf",
             "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "Pasted image 20220825165809.png",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "c3ccced3909c8244",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": false
-              }
+              "type": "git-view",
+              "state": {}
             }
           },
           {
@@ -97,9 +83,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Pasted image 20220825165809.png"
-              }
+              "state": {}
             }
           },
           {
@@ -119,12 +103,33 @@
             }
           },
           {
+            "id": "c3ccced3909c8244",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false
+              }
+            }
+          },
+          {
+            "id": "80b2a4a726ab4b7f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
             "id": "7330e27689ca1a6e",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Pasted image 20220825165809.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,24 +140,23 @@
               }
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 375.5
   },
-  "active": "7e9a8dd8cef8d1b1",
+  "active": "8c8ac699379c0381",
   "lastOpenFiles": [
+    "pytorch_intro.ipynb",
+    "Pytorch.md",
+    "Pytorch_advanced.ipynb",
+    "深度学习/损失函数.md",
+    "强化学习/重要公式.md",
+    "强化学习/PPO.md",
+    "Pasted image 20220825165809.png",
     "概念解释.md",
     "Gitbook/Algorithm/数据结构.md",
-    "Gitbook/Algorithm/二叉树.md",
-    "强化学习/基础知识.md",
-    "强化学习/无模型预测.md",
-    "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
-    "深度学习/优化器.md",
-    "深度学习/损失函数.md",
-    "Pytorch.md",
-    "Pasted image 20220825165809.png"
+    "Gitbook/Algorithm/二叉树.md"
   ]
 }
