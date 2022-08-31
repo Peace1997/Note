@@ -4,11 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "a23b8084b9eda648",
+        "id": "9e2c09ea77169563",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "深度学习/梯度消失 & 梯度爆炸.md",
+            "mode": "source",
+            "backlinks": false,
+            "source": false
+          }
         }
       }
     ],
@@ -57,7 +62,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 266.5
   },
   "right": {
     "id": "e2303acfdb5f9d50",
@@ -80,7 +85,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "深度学习/梯度消失 & 梯度爆炸.md"
+              }
             }
           },
           {
@@ -116,6 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "深度学习/梯度消失 & 梯度爆炸.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -127,6 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "深度学习/梯度消失 & 梯度爆炸.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,17 +152,17 @@
     "direction": "horizontal",
     "width": 375.5
   },
-  "active": "a23b8084b9eda648",
+  "active": "9e2c09ea77169563",
   "lastOpenFiles": [
-    "机器学习/归一化.md",
+    "机器学习/cek.md",
     "机器学习/模仿学习.md",
-    "概念解释.md",
-    "机器学习/AutoML.md",
-    "机器学习/梯度下降.md",
-    "问题汇总.md",
-    "gai-nian-jie-shi.md",
+    "机器学习/img/gd5.png",
+    "机器学习/img/gd3.png",
+    "机器学习/img/gd1.png",
+    "机器学习/img/gd2.png",
     "强化学习/策略梯度.md",
-    "LeetCode/二叉树.md",
-    "论文/1.md"
+    "梯度下降.md",
+    "问题汇总.md",
+    "概念解释.md"
   ]
 }
