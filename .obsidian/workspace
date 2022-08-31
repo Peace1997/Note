@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "9e2c09ea77169563",
+        "id": "a23b8084b9eda648",
         "type": "leaf",
         "state": {
           "type": "empty",
@@ -57,7 +57,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 266.5
+    "width": 300
   },
   "right": {
     "id": "e2303acfdb5f9d50",
@@ -143,17 +143,17 @@
     "direction": "horizontal",
     "width": 375.5
   },
-  "active": "9e2c09ea77169563",
+  "active": "a23b8084b9eda648",
   "lastOpenFiles": [
-    "LeetCode/动态规划.md",
-    "未命名.md",
-    "LeetCode/二叉树.md",
-    "LeetCode/数据结构.md",
+    "机器学习/归一化.md",
+    "机器学习/模仿学习.md",
+    "概念解释.md",
+    "机器学习/AutoML.md",
+    "机器学习/梯度下降.md",
+    "问题汇总.md",
+    "gai-nian-jie-shi.md",
     "强化学习/策略梯度.md",
-    "强化学习/无模型预测.md",
-    "强化学习/重要公式.md",
-    "深度学习/优化器.md",
-    "深度学习/损失函数.md",
-    "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md"
+    "LeetCode/二叉树.md",
+    "论文/1.md"
   ]
 }
