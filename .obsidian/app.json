@@ -1,5 +1,6 @@
 {
   "showLineNumber": false,
   "rightToLeft": false,
-  "promptDelete": false
+  "promptDelete": false,
+  "alwaysUpdateLinks": true
 }

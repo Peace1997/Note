@@ -150,19 +150,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 375.5
+    "width": 268.5
   },
-  "active": "9e2c09ea77169563",
+  "active": "8c8ac699379c0381",
   "lastOpenFiles": [
+    "强化学习/策略梯度.md",
+    "深度学习/梯度消失 & 梯度爆炸.md",
+    "LeetCode/RLchina.md",
+    "深度学习/img/gradient_vansishing.png",
+    "Pasted image 20220825165809.png",
     "机器学习/cek.md",
     "机器学习/模仿学习.md",
     "机器学习/img/gd5.png",
     "机器学习/img/gd3.png",
-    "机器学习/img/gd1.png",
-    "机器学习/img/gd2.png",
-    "强化学习/策略梯度.md",
-    "梯度下降.md",
-    "问题汇总.md",
-    "概念解释.md"
+    "机器学习/img/gd1.png"
   ]
 }
