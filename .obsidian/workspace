@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "a23b8084b9eda648",
+        "id": "f29e370f0c3b5213",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "问题汇总.md",
+            "file": "论文/未知环境/未知环境.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -41,7 +41,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#多机器人",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -62,7 +62,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 266.5
   },
   "right": {
     "id": "e2303acfdb5f9d50",
@@ -86,7 +86,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "问题汇总.md"
+                "file": "论文/未知环境/未知环境.md"
               }
             }
           },
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "问题汇总.md",
+                "file": "论文/未知环境/未知环境.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "问题汇总.md",
+                "file": "论文/未知环境/未知环境.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,19 +150,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 375.5
+    "width": 268.5
   },
-  "active": "8c8ac699379c0381",
+  "active": "f29e370f0c3b5213",
   "lastOpenFiles": [
-    "强化学习/策略梯度.md",
-    "强化学习/重要公式.md",
-    "概念解释.md",
     "问题汇总.md",
-    "强化学习/基础知识.md",
-    "强化学习/无模型预测.md",
-    "强化学习/常问问题.md",
-    "img/HashMap.png",
+    "论文/未知环境/未知环境.md",
     "Pytorch.md",
-    "Pasted image 20220825165809.png"
+    "论文/未知环境/论文/1-多机器人协同导航技术综述.pdf",
+    "强化学习/基础知识.md",
+    "强化学习/常问问题.md",
+    "强化学习/策略梯度.md",
+    "概念解释.md",
+    "LeetCode/二叉树.md",
+    "机器学习/归一化.md"
   ]
 }
