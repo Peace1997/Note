@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "f29e370f0c3b5213",
+        "id": "a23b8084b9eda648",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "论文/未知环境/未知环境.md",
+            "file": "机器学习/模仿学习.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -41,7 +41,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#多机器人",
+                "query": "tag:#决策大模型",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -62,7 +62,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 266.5
+    "width": 300
   },
   "right": {
     "id": "e2303acfdb5f9d50",
@@ -86,7 +86,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "论文/未知环境/未知环境.md"
+                "file": "机器学习/模仿学习.md"
               }
             }
           },
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "论文/未知环境/未知环境.md",
+                "file": "机器学习/模仿学习.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "论文/未知环境/未知环境.md",
+                "file": "机器学习/模仿学习.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,19 +150,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 268.5
+    "width": 234.5
   },
   "active": "8c8ac699379c0381",
   "lastOpenFiles": [
-    "LeetCode/动态规划.md",
-    "LeetCode/RLchina.md",
-    "LeetCode/数据结构.md",
-    "LeetCode/排序.md",
-    "LeetCode/二叉树.md",
-    "LeetCode/img/Tree1.png",
+    "机器学习/归一化.md",
+    "强化学习/PPO.md",
+    "机器学习/模仿学习.md",
+    "待学汇总.md",
+    "前沿进展.md",
+    "强化学习/策略梯度.md",
     "Pytorch.md",
-    "论文/未知环境/未知环境.md",
-    "问题汇总.md",
-    "论文/未知环境/论文/1-多机器人协同导航技术综述.pdf"
+    "Pasted image 20220825165809.png",
+    "强化学习/无模型预测.md",
+    "常用解释.md"
   ]
 }
