@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "a23b8084b9eda648",
+        "id": "f954d78892371668",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "机器学习/模仿学习.md",
+            "file": "强化学习/PPO.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -86,7 +86,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "机器学习/模仿学习.md"
+                "file": "强化学习/PPO.md"
               }
             }
           },
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "机器学习/模仿学习.md",
+                "file": "强化学习/PPO.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "机器学习/模仿学习.md",
+                "file": "强化学习/PPO.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,15 +154,15 @@
   },
   "active": "8c8ac699379c0381",
   "lastOpenFiles": [
-    "机器学习/归一化.md",
+    "常用解释.md",
     "强化学习/PPO.md",
-    "机器学习/模仿学习.md",
+    "img/Normal_DIstribution_1.png",
+    "img/Normal_DIstribution_2.png",
     "待学汇总.md",
     "前沿进展.md",
+    "问题汇总.md",
     "强化学习/策略梯度.md",
-    "Pytorch.md",
-    "Pasted image 20220825165809.png",
-    "强化学习/无模型预测.md",
-    "常用解释.md"
+    "强化学习/常问问题.md",
+    "强化学习/基础知识.md"
   ]
 }
