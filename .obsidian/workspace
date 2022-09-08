@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "f954d78892371668",
+        "id": "b563967bfd465880",
         "type": "leaf",
         "state": {
           "type": "markdown",
@@ -62,7 +62,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 249.5
   },
   "right": {
     "id": "e2303acfdb5f9d50",
@@ -154,15 +154,15 @@
   },
   "active": "8c8ac699379c0381",
   "lastOpenFiles": [
-    "常用解释.md",
-    "强化学习/PPO.md",
-    "img/Normal_DIstribution_1.png",
-    "img/Normal_DIstribution_2.png",
-    "待学汇总.md",
     "前沿进展.md",
-    "问题汇总.md",
-    "强化学习/策略梯度.md",
+    "机器学习/模仿学习.md",
+    "机器学习/运筹优化.md",
+    "强化学习/基础知识.md",
     "强化学习/常问问题.md",
-    "强化学习/基础知识.md"
+    "强化学习/PPO.md",
+    "强化学习/策略梯度.md",
+    "强化学习/无模型预测.md",
+    "LeetCode/二叉树.md",
+    "LeetCode/动态规划.md"
   ]
 }

@@ -1,14 +1,123 @@
+---
+aka description: 近端策略优化
+---
+
 ## 一、简述
 
-## 二、重要性采样
 
-### 先导知识
+## 二、重要性采样
+importance sampling
+
+### 1. 先导知识
 对于一个随机变量，我们通常用**概率密度函数** f (x) , 来刻画该变量的概率分布 p 特性。
 具体来说，给定随机变量的一个取值 x，可以根据概率密度函数来计算该值对应的概率 (密度)。  x $\rightarrow$ f (x)
-反过来，也可以*根据概率密度函数提供的概率分布信息来生成随机变量的一个取值*，这就是**采样**。 x ~ p
+反过来，也可以根据概率密度函数提供的概率分布信息来生成随机变量的一个取值，这就是**采样**。 x ~ p
 因此，从某种意义上来说，采样是概率密度函数的逆向应用。与根据概率密度函数计算样本点对应的概率值不同，采样过程往往没有那么直接，通常需要根据待采样分布的具体特点来选择合适的**采样策略**。
 
-### 概率密度函数的期望值
+### 2.重要性采样方法
+
+我们通过计算一个目标函数的期望值，来体现重要性采样的使用方法和使用场景
+
+#### 问题描述
+
+已知函数 $f(x)$、及其对应分布 $p$，我们从分布 $p$ 中对 $x$ 进行采样，然后带入 $f$，即可得到 $f(x)$，如果我们可以对分布 p 进行积分如何求解期望，如果我们不能对分布 p 进行积分，如何求解 $f(x)$ 的期望？如果我们不能从分布 p 采样数据，如何求解 $f(x)$ 的期望？
+
+#### 问题解决
+
+对于问题 1（**积分**）：如果我们可以对分布 $p$ 求积分的话，可以直接利用积分公式进行求解：
+$$
+\mathbb{E}_{x \sim p}[f(x)] = \int f(x) p(x) \mathrm{d} x
+$$
+> 通过积分的方法，我们可以获取分布p中所有的x的值，这样计算出来的期望值也是最准确的。 p(x)为概率函数
+
+对于问题 2 （**采样**）：如果不能对分布 $p$ 求积分，此时我们可以通过在 p 中进行采样数据 $x^i$，把 $x^i$ 带入 f，计算求平均值，即可近似 $f(x)$ 的期望值。
+$$
+\mathbb{E}_{x \sim p}[f(x)] \approx \frac{1}{N} \sum_{i=1}^N f\left(x^i\right)
+$$
+> 由于我们可以对p分布进行采样，通过从p分布中采样尽可能多的值来近似最后的期望值
+
+对于问题 3（**重要性采样**），如果我们无法从 p 中进行采样的话，我们可以从其他分布 q 来进行采样计算，由于 p、q 分布存在差异，所以我们得需对 q 分布进行纠正，这就需要用到我们所说的重要性采样的方法。
+
+首先我们问题1的积分公式进行转换：
+$$
+\int f(x) p(x) \mathrm{d} x=\int f(x) \frac{p(x)}{q(x)} q(x) \mathrm{d} x=\mathbb{E}_{x \sim q}\left[f(x) \frac{p(x)}{q(x)}\right]
+$$
+通过转换，我们就可以将原问题：从 p 分布中采样计算 f (x) 的期望，转换为从 q 中转换，计算 $f(x) \frac{p(x)}{q(x)}$ 的期望，其中，$\frac{p(x)}{q(x)}$ 就是**重要性权重**，用来修正这两个分布的差异。
+$$
+\mathbb{E}_{x \sim p}[f (x)]=\mathbb{E}_{x \sim q}\left[f (x) \frac{p (x)}{q (x)}\right]
+$$
+#### 重要性采样的使用场景
+计算期望时，由于无法从原始分布 p 采样的情况，通过在相似分布 q 中采样，来近似待求的期望结果。
+
+
+#### 重要性采样的问题
+
+对于重要性采样，虽然 q 的分布可以是任取的，但是实际上 **p、q 的分布不能差距过大**，否则可能会出现问题：
+
+*期望相同，方差较大*
+通过下图可知，p、q 分布差距是比较大的，p 分布采样到的 x 主要集中在左侧，而 q 分布采样主要集中在右侧，但是如果采样方差计算的话，两者之间的差距就会表现出来。其中方差的计算公式为：$\operatorname{Var}[X]=E\left[X^2\right]-(E[X])^2$
+$$
+\begin{align*}
+&\operatorname{Var}_{x \sim p}[f(x)]=\mathbb{E}_{x \sim p}\left[f(x)^2\right]-\left(\mathbb{E}_{x \sim p}[f(x)]\right)^{2}\\\\	
+\operatorname{Var}_{x \sim q}\left[f(x) \frac{p(x)}{q(x)}\right] &=\mathbb{E}_{x \sim q}\left[\left(f(x) \frac{p(x)}{q(x)}\right)^2\right]-\left(\mathbb{E}_{x \sim q}\left[f(x) \frac{p(x)}{q(x)}\right]\right)^2\\
+\\&=\mathbb{E}_{x \sim p}\left[f(x)^2 \frac{p(x)}{q(x)}\right]-\left(\mathbb{E}_{x \sim p}[f(x)]\right)^2
+\end{align*}
+
+$$
+![[importance_sampling.png]]
+通过对比两者的方差公式，主要的差距是体现在方差公式的第一项，从q分布的采样方差要比p分布的采样方差多一个重要性权重，因此如果重要性权重很大的话，他们的方差差距也是比较大的。
+
+因此从 p、q 中只要采集够多的样本，就可以让他们他们的期望值是比较相似的，但是如果采样的样本不够多的话，由于两者方差比较大， 就很容易使最后期望值的计算结果差距比较大。
+
+**总结：**
+因此要想解决重要性采样的缺点：
+- 从 p、q 分布中采集足够多的样本
+- p、q 分布的差异不能过大
+
+
+### 3. 重要性采样在异策略中的应用
+
+将同策略的策略梯度，通过重要性采样，转换为异策略的策略梯度。
+
+#### 方法介绍
+
+在策略梯度中，我们是通过策略 $\pi_\theta$ 来与环境进行交互，采样获得轨迹 $\tau$，通过计算 $\mathbb{E}_{\tau \sim p_\theta(\tau)}\left[R(\tau) \nabla \log p_\theta(\tau)\right]$ 来更新策略，而现在我们使用策略 $\pi_{\theta^\prime}$ 代替策略 $\pi_\theta$ 来与环境交互，策略 $\pi_{\theta^\prime}$ 只用于给策略 $\pi_\theta$ 做示范，提供与环境的交互数据，策略 $\pi_\theta$ 借由这些交互数据来更新参数 $\theta$。
+
+基于重要性采样的思想，我们原本是希望从 $\theta$ 中进行进行采样的，但是现在改为通过 $\theta^\prime$ 进行采样，这样采集的轨迹数据 $\tau$ 就都来自于分布 $\theta^\prime$，而我们要学习的策略是 $\theta$，由于两个分布存在差异，现在通过重要性权重 $\frac{p_\theta(\tau)}{p_\theta^\prime(\tau)}$ 来修正
+
+*为什么要用 $\theta^\prime$ 替换 $\theta$ 来进行采样？*
+使用 $\theta^\prime$ 进行采样时，采样的数据是与 $\theta$ 无关的，$\theta$ 可以利用 $\theta^\prime$ 采样的大量数据完成**多次更新**，一直到 $\theta$ 训练更新到一定程度时，在使用 $\theta^\prime$ 重新进行采样。
+
+#### 梯度计算方法
+
+在进行策略梯度计算时，我们并不是针对 $\tau$ 来进行的，而是面向每个状态-动作对分开计算：
+$$
+\mathbb{E}_{\left(s_t, a_t\right) \sim \pi_\theta}\left[A^\theta\left(s_t, a_t\right) \nabla \log p_\theta\left(a_t^n \mid s_t^n\right)\right]
+$$
+这里采用的技巧是：[[策略梯度#四、策略梯度改进]]，优势函数表示在当前状态 $s_t$ 下未来奖励的累积减去基线（Critic 的预测值），用于判断当前状态下采取动作的**相对好坏**，如果优势函数值大于 0，则增大当前状态下输出该动作的概率。
+
+由于重要性采样，将同策略的策略梯度改变为了异策略，之前与环境进行交互的策略 $\pi_\theta$ 变为了 $\theta^\prime$，所以现在 $s_{t}、a_{t}$ 是策略 $\pi_{\theta^\prime}$ 与环境交互采样到的数据，同时优势函数也需要进行修改；但是要进行更新的策略是 $\pi_\theta$，因为 $\theta^\prime$ 与 $\theta$ 是不同的模型，所以要有一个修正的重要性权重：$\frac{p_\theta(s_t, a_t)}{p_{\theta^{\prime}}(s_t,a_t)}$，其中分子分母拆开为：
+$$
+\begin{aligned}
+p_\theta\left(s_t, a_t\right) &=p_\theta\left(a_t \mid s_t\right) p_\theta\left(s_t\right) \\
+p_{\theta^{\prime}}\left(s_t, a_t\right) &=p_{\theta^{\prime}}\left(a_t \mid s_t\right) p_{\theta^{\prime}}\left(s_t\right)
+\end{aligned}
+$$
+基于此，带入原本的策略梯度的公式可以得出：
+$$
+\mathbb{E}_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} \frac{p_\theta\left(s_t\right)}{p_{\theta^{\prime}}\left(s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right) \nabla \log p_\theta\left(a_t^n \mid s_t^n\right)\right]
+$$
+但是由于通常我们很难计算环境中的$p(s_t)$发生的概率，而$p(a_{t} | s_{t})$是可以根据策略网络模型得出的，因此计算时我们常常会忽略掉$p(s_t)$的计算。所以基于重要性采样的**异策略的梯度**：
+$$
+\mathbb{E}_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right) \nabla \log p_\theta\left(a_t^n \mid s_t^n\right)\right]
+$$
+
+
+## 三、近端策略优化
+
+**问题解决**：
+当我们使用重要性采样，如果两个分布相差太多，，
+
 
 
 
