@@ -651,6 +651,7 @@ button,
   font-size: var(--h4) !important;
   color: var(--h4-color);
   font-weight: var(--h4-weight) !important;
+  /*text-transform: uppercase;*/
 }
 .markdown-preview-view h5,
 .HyperMD-header-5 .cm-header-5,

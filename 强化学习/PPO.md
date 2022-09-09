@@ -47,7 +47,7 @@ $$
 \mathbb{E}_{x \sim p}[f (x)]=\mathbb{E}_{x \sim q}\left[f (x) \frac{p (x)}{q (x)}\right]
 $$
 #### 重要性采样的使用场景
-计算期望时，由于无法从原始分布 p 采样的情况，通过在相似分布 q 中采样，来近似待求的期望结果。
+计算期望时，由于无法从原始分布 p 采样的情况，通过在相似分布 q 中采样，来近似待求的期望结果，或者说逼近所求分布p。
 
 
 #### 重要性采样的问题
@@ -111,12 +111,118 @@ $$
 $$
 \mathbb{E}_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right) \nabla \log p_\theta\left(a_t^n \mid s_t^n\right)\right]
 $$
+#### 目标策略
 
+当未使用重要性采样时，我们要去优化的目标函数为：
+$$
+J(\theta)=\mathbb{E}_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}A^{\theta}\left(s_t, a_t\right)]
+$$
+当我们使用重要性采样的时候, 要去优化的目标函数为
+$$
+J^{\theta^{\prime}}(\theta)=\mathbb{E}_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right)\right]
+$$
+
+
+我们也根据梯度与目标函数的关系，可以反推原来的目标函数：
+$$
+\nabla f(x)=f(x) \nabla \log f(x)
+$$
+即$\nabla p_\theta(a_{t}\mid s_t)$ 
+
+$\theta$ 求梯度时, $p_{\theta^{\prime}}\left(a_t \mid s_t\right)$ 和 $A^{\theta^{\prime}}\left(s_t, a_t\right)$ 都是常数。
 
 ## 三、近端策略优化
 
 **问题解决**：
-当我们使用重要性采样，如果两个分布相差太多，，
+当我们使用重要性采样时，如果两个分布相差太多（方差较大），会影响梯度计算的结果，因为为了避免分布之间相差太多，就提出了 PPO 方法来解决。
+
+### 1. 同策略
+
+同样是使用重要性采样，PPO 在这里的话是同策略的，这是因为 PPO 中与环境交互采样数据的策略 $\theta^\prime$ 是 $\theta_{old}$ ，即行为策略同目标策略（[[常问问题#行为策略 目标策略]]）都是 $\pi_\theta$ , 因此 PPO 是同策略的算法。
+
+### 2. 目标函数约束
+
+为了有效避免行为策略与目标策略的分布相差较大，应多加一个约束，这个约束就是 $\theta$ 与 $\theta^{\prime}$ 输出的动作的**KL 散度**（ [[常用解释#KL 散度]]），这一项用于描述 $\theta$ 与 $\theta^{\prime}$ 的相似程度
+> 在这里应用的 KL 散度描述的并不是这两个分布之间参数上的距离，二是它们行为上的距离。行为距离就是给定同样的状态，输出动作之间的差异，由于这动作的分布都是概率分布，所以我们计算的是这两个概率分布的 KL 散度。
+
+*为什么不直接计算 $\theta$ 和 $\theta'$ 分支之间参数上的距离，而是行为的距离 ?*
+这是因为对于策略网络，参数的变化与动作的变化不一定是完全一致的，有时候参数稍微改变，输出的动作会差异很大，有时参数变化很多，输出的动作可能没什么改变。因为我们最终关注的是动作上的差异，所以通过 KL 散度来控制动作分布的差距。
+
+### 3. 近端策略优化流程
+
+- 首先我们初始化一个策略的参数 $\theta^0$、价值函数参数 $\phi^0$
+- 在每一个迭代里，我们用前一个训练的迭代得到的策略的参数 $\theta^k$ 去与环境交互，采用得到大量状态-动作对。
+- 根据 $\theta^k$ 交互的结果，结合价值函数 $\phi^k$ 我们估测 $A^{\theta_{k}}(s_t,a_t)$  ，可以使$\theta$完成多次更新，同时也会更新我们的价值函数参数$\phi$。
+
+#### 核心方法
+因为我们采用了**重要性采样**的方法， 可以利用旧策略采样的数据完成新策略的更新。
+为了避免不同分布之间差异过大，可以通过**KL 散度**、**裁剪**的方法来对分布差异进行纠正。
+
+所以 $\theta$ 可以利用 $\theta^k$ 采样的数据完成多次更新。
+
+### 4. 近端策略优化惩罚
+
+对于近端策略优化惩罚 (PPO-penalty)，有一个**自适应 KL 散度**（adaptive K divergence） 的纠正方法，其要最大化的目标函数为：
+$$
+\begin{aligned}
+&J_{\mathrm{PPO}}^{\theta^k}(\theta)=J^{\theta^k}(\theta)-\beta \mathrm{KL}\left(\theta, \theta^k\right) \\
+&J^{\theta^k}(\theta) \approx \sum_{\left(s_t, a_t\right)} \frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^k}\left(a_t \mid s_t\right)} A^{\theta^k}\left(s_t, a_t\right)
+\end{aligned}
+$$
+在这里将 KL 散度作为惩罚项，其中参数 $\beta$ 是可以动态调整的，我们需要事先设定一个可接受的 KL 散度的最大值 $KL_{max}$ 和最小值 $KL_{min}$，如果我们优化一次上述公式后：
+- ${KL}\left(\theta, \theta^k\right)$ > $KL_{max}$，说明新旧分布差异是比较大，说明后面的惩罚项没有起到作用，因此应该增加惩罚力度，即**增大** $\beta$ 的值。
+- ${KL}\left(\theta, \theta^k\right)$ < $KL_{min}$，说明新旧分布差异是比较小的，就说明后面的惩罚项太强了，因为我们更想要的优化的的目标是前一项，如果新旧分布差异过小的话，就有可能会倾向于优化后一项，因此我们减少 $\beta$ 的值。
+
+### 5. 近端策略优化裁剪
+
+对于近端策略优化裁剪（PPO-clip），策略目标函数里面是没有KL散度的，而是增加了一个**裁剪**操作，其要最大化的目标函数为：
+$$
+\begin{aligned}
+J_{\mathrm{PPO} 2}^{\theta^k}(\theta) \approx \sum_{\left(s_t, a_t\right)} \min \left(\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^k}\left(a_t \mid s_t\right)} A^{\theta^k}\left(s_t, a_t\right),\right.
+\left.\operatorname{clip}\left(\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^k}\left(a_t \mid s_t\right)}, 1-\varepsilon, 1+\varepsilon\right) A^{\theta^k}\left(s_t, a_t\right)\right)
+\end{aligned}
+$$
+- **min** 表示将在原始目标函数与裁剪后的目标函数中选择一个较小的项；之所以选择较小项的原因是 PPO 想要每次更新的步幅小一点。
+- **clip** 表示直接对分布差异的进行裁剪限制，当分布差异高于上限（$1 + \epsilon$ ） 和低于下限（ $1 - \epsilon$ ）时直接裁剪截断；而 PPO1 中设定的最大值 $KL_{max}$、最小值 $KL_{min}$ 仅仅是判断条件。其中 $\epsilon$ 是一个超参数，通常设定为 0.1 或 0.2。裁剪效果如下图所示：
+![400](img/PPO_clip.png)
+
+对于整个目标函数来看，优势函数 $A^{\theta^k}\left(s_t, a_t\right)$ 的正负值会对目标函数的选取造成影响：
+- A > 0 ; 说明当前的状态-动作对是好的， 我们希望增大这个状态-动作对的概率 $p_\theta(a_{t}\mid s_{t})$，但是它与 $p_{\theta^k}(a_{t}\mid s_{t})$ 的比值不能超过 $1+\epsilon$ ；
+- A < 0 ；说明当前状态-动作对是不好的，我们希望把 $p_{\theta}(a_{t} \mid s_{t})$ 减小。如果这时 $p_\theta(a_{t}\mid s_{t})$ 比 $p_{\theta^k}(a_{t}\mid s_{t})$ 还大的话，明显是错误的，我们需要尽可能的减小 $p_{\theta}(a_{t} \mid s_{t})$，但是它与 $p_{\theta^k}(a_{t}\mid s_{t})$ 的比值不能小于 $1-\epsilon$；
+![](PPO_clip2.png)
+之所以设定这样的裁剪方式，是PPO2希望每次概率分布更新时，无论是增加某状态-动作对的概率还是减小状态-动作对的概率，都要有一定的限度，**不能使的两个分布差距相差过大**，这也就是PPO解决重要性采样缺点的方式。PPO每次更新的步幅虽然小，但是每次都是有效的。
+
+
+
+
+
+
+
+
+
+
+
+在 PPO 中 KL 散度应用在优化目标函数的公式中：
+$$
+\begin{aligned}
+&J_{\mathrm{PPO}}^{\theta^{\prime}}(\theta)=J^{\theta^{\prime}}(\theta)-\beta \mathrm{KL}\left(\theta, \theta^{\prime}\right) \\
+&J^{\theta^{\prime}}(\theta)=\mathbb{E}_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right)\right]
+\end{aligned}
+$$
+在TRPO（信任区域策略优化(trust region policy optimization) PPO前身）中把KL散度当作约束。
+$$
+J_{\mathrm{TRPO}}^{\theta^{\prime}}(\theta)=\mathbb{E}_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right)\right], \mathrm{KL}\left(\theta, \theta^{\prime}\right)<\delta
+$$
+
+
+
+
+
+
+
+
+
+
 
 
 
