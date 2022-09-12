@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "强化学习/PPO.md",
+            "file": "深度学习/深度学习入门.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -86,7 +86,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "强化学习/PPO.md"
+                "file": "深度学习/深度学习入门.md"
               }
             }
           },
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "强化学习/PPO.md",
+                "file": "深度学习/深度学习入门.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "强化学习/PPO.md",
+                "file": "深度学习/深度学习入门.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,17 +152,49 @@
     "direction": "horizontal",
     "width": 234.5
   },
+  "floating": {
+    "id": "af2e8c7821f6213d",
+    "type": "floating",
+    "children": [
+      {
+        "id": "17c09a0f646a44fd",
+        "type": "window",
+        "children": [
+          {
+            "id": "975742559ab38be8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "面试/面试问题汇总.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          }
+        ],
+        "direction": "vertical",
+        "x": 208,
+        "y": 56,
+        "width": 1024,
+        "height": 800,
+        "maximize": false,
+        "zoom": 0
+      }
+    ]
+  },
   "active": "8c8ac699379c0381",
   "lastOpenFiles": [
-    "强化学习/PPO.md",
-    "强化学习/策略梯度.md",
-    "常用解释.md",
-    "待学汇总.md",
-    "问题汇总.md",
-    "Pasted image 20220825165809.png",
-    "强化学习/重要公式.md",
-    "强化学习/无模型预测.md",
-    "LeetCode/二叉树.md",
-    "LeetCode/动态规划.md"
+    "面试/面试问题汇总.md",
+    "深度学习/深度学习入门.md",
+    "深度学习/梯度消失 & 梯度爆炸.md",
+    "深度学习/损失函数.md",
+    "深度学习/优化器.md",
+    "综合/决策智能落地.md",
+    "面试/投递进展.md",
+    "面试/问题汇总.md",
+    "面试/面前准备.md",
+    "2022-09-12.md"
   ]
 }
