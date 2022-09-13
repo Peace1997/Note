@@ -41,6 +41,6 @@
   "things-style@@strong-color": "#E0779F",
   "things-style@@text-editor": "Times New Roman,Songti SC,宋体",
   "things-style@@em-color": "#A391DA",
-  "things-style@@h4-color": "#D58C15",
-  "things-style@@h4-weight": 600
+  "things-style@@h4-color": "#E69818",
+  "things-style@@h5": "0.95em"
 }

@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "2022-09-11.md",
+            "file": "面试/常问问题.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -86,7 +86,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2022-09-11.md"
+                "file": "面试/常问问题.md"
               }
             }
           },
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2022-09-11.md",
+                "file": "面试/常问问题.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2022-09-11.md",
+                "file": "面试/常问问题.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,15 +154,15 @@
   },
   "active": "8c8ac699379c0381",
   "lastOpenFiles": [
-    "2022-09-12.md",
-    "LeetCode/二叉树.md",
-    "LeetCode/排序.md",
-    "LeetCode/动态规划.md",
-    "LeetCode/数据结构.md",
     "面试/面试问题汇总.md",
+    "机器学习/归一化.md",
+    "机器学习/运筹优化.md",
+    "机器学习/模仿学习.md",
+    "深度学习/梯度消失 & 梯度爆炸.md",
+    "面试/常问问题.md",
     "面试/面前准备.md",
-    "面试/问题汇总.md",
     "面试/投递进展.md",
-    "深度学习/深度学习入门.md"
+    "强化学习/策略梯度.md",
+    "强化学习/无模型预测.md"
   ]
 }
