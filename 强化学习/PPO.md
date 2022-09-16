@@ -1,10 +1,10 @@
 ---
-aka description: 近端策略优化
+aka description: Proximal Policy Optimization 近端策略优化 
 ---
 
 ## 一、PPO简述
 
-PPO 是一种改进的策略梯度的算法，结合了重要性采样的思想，并对新旧策略的分布进行限制，保证每一次新计算出的策略能够和原策略相差不大，稳步提升算法的表现。
+PPO (Proximal Policy Optimization) 是一种改进的策略梯度的算法，结合了重要性采样和 GAE（Generalized Advantage Estimator）的思想，对新旧策略的分布进行限制，保证每一次新计算出的策略能够和原策略相差不大，稳步提升算法的表现。
 
 近端策略优化算法借鉴了信任区域策略优化算法，通过采用一阶优化，在采样效率、算法表现以及实现和调试的复杂度之间取得了新的平衡。
 
@@ -136,7 +136,35 @@ $$
 
 $\theta$ 求梯度时, $p_{\theta^{\prime}}\left(a_t \mid s_t\right)$ 和 $A^{\theta^{\prime}}\left(s_t, a_t\right)$ 都是常数。
 
-## 三、近端策略优化
+## 三、GAE
+Generalized Advantage Estimator
+
+
+首先采用时序差分的方式来计算回报（ $r_t+\gamma v(s_{t+1})$ ）和其增量$\delta_t$
+$$
+ {TD_{Error}}=\delta_t=r_t+\gamma v\left(s_{t+1}\right)-v\left(s_t\right)
+$$
+然后运用GAE公式进行**优势函数**的估计：
+$$
+\sum_{l=0}^{\infty}(\gamma \lambda)^l \delta_{t+1}^V
+$$
+
+为了快速估计序列中所有时刻的估计值，采用**倒序计算**，从 t+1 时刻估计 t 时刻：
+$$
+\hat{A}_t^{G A E(\gamma, \lambda)}=\sum_{l=0}^{\infty}(\gamma \lambda)^l \delta_{t+1}^V=\delta_t^V+\gamma \lambda \hat{A}_{t+1}^{G A E(\gamma, \lambda)}
+$$
+
+### rewards to go
+其中 rewards-to-go（$\hat{R}_t$）是计算每个状态的回报值。
+$t$ 时刻的剩余可得回报 $\hat{R}_t$ 是指在一个Trajectory $\tau=\left(s_1, a_1, r_1, s_2, \cdots, s_T\right)$ 中, $t$ 时刻及其以 后所有奖励的累计, 其计算如下所示。
+$$
+\hat{R}_t=\sum_{k=t}^T r_k
+$$
+它可以通过最小化损失函数的方法，指导 Critic 网络（value function）的更新，使得 Critic 网络更好的预测每个状态的回报值。
+
+
+
+## 四、近端策略优化
 
 **问题解决**：
 当我们使用重要性采样时，如果两个分布相差太多（方差较大），会影响梯度计算的结果，因为为了避免分布之间相差太多，就提出了 PPO 方法来解决。
@@ -198,10 +226,7 @@ $$
 之所以设定这样的裁剪方式，是PPO2希望每次概率分布更新时，无论是增加某状态-动作对的概率还是减小状态-动作对的概率，都要有一定的限度，**不能使的两个分布差距相差过大**，这也就是PPO解决重要性采样缺点的方式。PPO每次更新的步幅虽然小，但是每次都是有效的。
 
 
-
-
-
-
+![[PPO.png]]
 
 
 
