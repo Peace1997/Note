@@ -4,15 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "ed1d6cca6d6e4915",
+        "id": "9971a70c08304ab8",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "image",
           "state": {
-            "file": "强化学习/Decision Transformer.md",
-            "mode": "source",
-            "backlinks": false,
-            "source": false
+            "file": "数据结构/img/Pasted image 20220918121258.png"
           }
         }
       }
@@ -86,7 +83,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "强化学习/Decision Transformer.md"
+                "file": "数据结构/img/Pasted image 20220918121258.png"
               }
             }
           },
@@ -123,7 +120,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "强化学习/Decision Transformer.md",
+                "file": "数据结构/img/Pasted image 20220918121258.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +132,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "强化学习/Decision Transformer.md",
+                "file": "数据结构/img/Pasted image 20220918121258.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,17 +149,17 @@
     "direction": "horizontal",
     "width": 234.5
   },
-  "active": "8c8ac699379c0381",
+  "active": "7e9a8dd8cef8d1b1",
   "lastOpenFiles": [
-    "强化学习/PPO.md",
-    "强化学习/Decision Transformer.md",
-    "img/ari.md",
-    "2022-09-16.md",
-    "强化学习/策略梯度.md",
-    "强化学习/img/PPO.png",
-    "强化学习/无模型预测.md",
-    "机器学习/贝叶斯优化.md",
-    "机器学习/归一化.md",
-    "机器学习/路径规划.md"
+    "Pasted image 20220916151231.png",
+    "Pasted image 20220914165816.png",
+    "数据结构/img/Pasted image 20220918121258.png",
+    "数据结构/img/Pasted image 20220918171453.png",
+    "数据结构/img/Pasted image 20220918170641.png",
+    "数据结构/img/Pasted image 20220918122622.png",
+    "数据结构/线性表.md",
+    "数据结构/基本概念.md",
+    "LeetCode/动态规划.md",
+    "LeetCode/二叉树.md"
   ]
 }

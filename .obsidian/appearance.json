@@ -2,5 +2,6 @@
   "cssTheme": "Things",
   "theme": "moonstone",
   "textFontFamily": "Songti TC,宋体",
-  "monospaceFontFamily": ""
+  "monospaceFontFamily": "",
+  "baseFontSize": 18
 }
