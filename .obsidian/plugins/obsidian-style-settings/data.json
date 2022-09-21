@@ -33,7 +33,7 @@
   "things-style@@minimal-icons-off": false,
   "things-style@@links-ext-on": true,
   "things-style@@links-int-on": true,
-  "things-style@@green": "#777497",
+  "things-style@@green": "#E5AD9E",
   "things-style@@accent-h": 215,
   "things-style@@line-height": 1.7,
   "things-style@@editor-font-size": 1.1,
@@ -43,6 +43,5 @@
   "things-style@@em-color": "#A391DA",
   "things-style@@h4-color": "#E69818",
   "things-style@@h5": "0.95em",
-  "things-style@@text": "Times New Roman,Songti SC,宋体",
-  "things-style@@code-color-l": "#D79B9B"
+  "things-style@@text": "Times New Roman,Songti SC,宋体"
 }

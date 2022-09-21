@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "ed1d6cca6d6e4915",
+        "id": "9971a70c08304ab8",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "强化学习/PPO.md",
+            "file": "面试/投递进展.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -86,7 +86,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "强化学习/PPO.md"
+                "file": "面试/投递进展.md"
               }
             }
           },
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "强化学习/PPO.md",
+                "file": "面试/投递进展.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "强化学习/PPO.md",
+                "file": "面试/投递进展.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,17 +152,17 @@
     "direction": "horizontal",
     "width": 234.5
   },
-  "active": "8c8ac699379c0381",
+  "active": "9971a70c08304ab8",
   "lastOpenFiles": [
-    "强化学习/RL.md",
-    "强化学习/策略梯度.md",
-    "强化学习/PPO.md",
-    "强化学习/Decision Transformer.md",
-    "深度学习/优化器.md",
-    "深度学习/梯度消失 & 梯度爆炸.md",
-    "深度学习/损失函数.md",
-    "img/ari.md",
-    "2022-09-16.md",
-    "强化学习/img/PPO.png"
+    "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
+    "综合/未命名.md",
+    "数据结构/线性表.md",
+    "数据结构/img/Pasted image 20220918121258.png",
+    "Pasted image 20220916151231.png",
+    "Pasted image 20220914165816.png",
+    "数据结构/img/Pasted image 20220918171453.png",
+    "数据结构/img/Pasted image 20220918170641.png",
+    "数据结构/img/Pasted image 20220918122622.png",
+    "数据结构/基本概念.md"
   ]
 }
