@@ -48,7 +48,7 @@ ipynb
 用于封装 Tensor 类型的 数据、梯度、梯度所用的方程 （后俩个用于反向传播）的变量，常用于前向、反向传播的梯度计算。
 使用方法：`requires_grad =True`，即：
 `torch.tensor (data,requires_grad =True)`
-![[Pasted image 20220825165809.png]]
+![[pytorch.png]]
 补：
 `from torchviz import make_dot` 打印计算流程
 

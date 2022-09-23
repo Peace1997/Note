@@ -8,27 +8,32 @@ RL Transformer 的开山之作了-- Decision Transformer (DT) 
 
 #### 什么是 DT
 
-**D**ecision **T**ransformer 是一种**自回归模型**。在 NLP 任务中，自回归模型是指给定前面的单词，预测当前时刻的单词，当前时刻的单词, 即计算 $p\left(x_t \mid x_{t-1}, x_{t-2}, \cdots, x_1\right)$ 。而在 DT 中, 给定前面的剩余可得回报 (Return-to-go)、状态以及动作, 即可预测当前应该执行的动作, 即计算 $p\left(a_t \mid s_t, \hat{R}_t, a_{t-1}, s_{t-1}, \hat{R}_{t-1}, \cdots, a_1, s_t, \hat{R}_1\right)$
+**D**ecision **T**ransformer 是一种**自回归模型**。在 NLP 任务中，自回归模型是指给定前面的单词，预测当前时刻的单词，即计算 $p\left(x_t \mid x_{t-1}, x_{t-2}, \cdots, x_1\right)$ 。而在 DT 中, 给定前面的剩余可得回报 (Return-to-go)、状态以及动作, 即可预测当前应该执行的动作, 即计算 $p\left(a_t \mid s_t, \hat{R}_t, a_{t-1}, s_{t-1}, \hat{R}_{t-1}, \cdots, a_1, s_t, \hat{R}_1\right)$
 
 >自回归模型（Autoregressive model，简称AR模型），是统计上一种处理时间序列的方法，
 
-#### 为什么需要 Decision Transformer
+#### 为什么需要 DT 
 
 利用 Transformer 强化的表征和时序建模能力，对 RL 问题转换为序列建模问题，直接输出动作（做出决策），需要要去计算策略梯度、去拟合价值函数。
+
+#### 与行为克隆的区别
+
+DT和行为克隆（behavioural cloning；BC）的核心区别在于DT建模了return，state和action三者之间的关系，而BC仅仅是在学state到action的映射。
+
 
 ### 整体流程
 如同传统的自回归模型
 
 
 ![](img/architecture.gif)
-#### 输入
 
-$(\hat{R}_1, s_1, a_1, \hat{R}_2, s_2, a_2, \cdots, \hat{R}_T, s_T)$
+输入： $(\hat{R}_1, s_1, a_1, \hat{R}_2, s_2, a_2, \cdots, \hat{R}_T, s_T)$
 
-作者在输入序列中之所以使用 [剩余可得回报](PPO#rewards to go) 而不是即时奖励, 是为了使模型能基于末来的期望回报来生成动作 , 而不是基于过去的回报，给定 $\hat{R}_t, \cdots, \hat{R}_1$ 就相当于给定了 $r_1, \cdots, r_T$. 因此，一个Trajectory可以使用剩余可得回报表示
+作者在输入序列中之所以使用 [剩余可得回报](PPO#rewards to go) 而不是即时奖励, 是为了使模型能**基于末来**的期望回报来生成动作 , 而不是基于过去的回报，给定 $\hat{R}_t, \cdots, \hat{R}_1$ 就相当于给定了 $r_1, \cdots, r_T$. 因此，一个Trajectory可以使用剩余可得回报表示
 $$
 \tau=\left(\hat{R}_1, s_1, a_1, \hat{R}_2, s_2, a_2, \cdots, \hat{R}_T, s_T, a_T\right)
 $$
 
-#### 输出
-$a_T$
+输出：$a_T$
+
+在训练时，在给定输入得到输出后，需要与ground-truth（标准答案） 的 $a_t$ 求得损失函数并进行反向传播，训练过程在timestep维度上可以并行, 整体上就是输入 $\tau$ 后输出一系列的动作的预测 $\left(\hat{a}_1, \hat{a}_2, \cdots, \hat{a}_T\right)$, 然后将其与 ground-truth的 $\left(a_1, a_2, \cdots, a_T\right)$ 求损失函数并反向传播。
