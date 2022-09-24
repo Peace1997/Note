@@ -25,10 +25,15 @@ https://blog.csdn.net/chen77716/article/details/6275762
 P1
 Hello everyone，My name is Mapeixin，I am from Zhejiang sci-tech university . My paper title is "Group Partition and Group Information based Multi-agent Consensus Systems".
 
-P2
-In recent years, multi-agent systems have captured compelling attention, and been widely used in the fields such as military, smart grid,  machine learning and so on. As a fundamental concern, consensus problem aims to achieve global agreement with only local interaction among agents.
 
-Consensus is a fundamental issue in distributed multi-agent systems, and utilizes the inter-agent relative state to update the state of each agent, so as to achieve global synchronization.
+sai tech 
+The  followings are formulas
+
+
+P2
+In recent years, multi-agent systems have captured compelling attention, and been widely used in the fields such as military(mɪləteri_), smart grid,  machine learning and so on. As a fundamental concern, consensus problem aims to achieve global agreement with only local interaction among agents.
+
+Consensus is a fundamental issue in distributed multi-agent systems, and utilizes(ˈjuːtəlaɪz) the inter-agent relative state to update the state of each agent, so as to achieve global synchronization(sɪŋkrənəˈzeɪʃ(ə)n).
 
 For the sake of privacy requirement, all the workers perform encryption operation *and provide only
 the gradient data to other workers or a common server.*  As a result, the inter-agent relative state makes no sense any more.
@@ -38,61 +43,55 @@ Motivated by this concern, this paper considers the distributed multi-agent cons
 
 P3:
 
-this paper considers the distributed multi-agent consensus problem in the absence of inter-agent relative states in discrete-time system，Consider n agents with a discrete-time model  ? as shown below ? . 
-in which x denote the state of agent i and  u denote  control input of agent i. k represents discrete time.
+this paper considers the distributed multi-agent consensus problem in the absence of inter-agent relative states in discrete-time system，Consider n agents with a discrete-time model . as followss
+in which x denote the state of agent i and  u denote  control input . k represents discrete time.
 
-Since there contains no interaction between any two agents, the inter-agent relative state $x_i − x_j$ is unavailable. Thereupon, the n agents are divided into m(≤ n) subgroups, and utilize the relative group information replacing of inter-agent information as the control input to update the agent state.
+Since there contains no interaction between any two agents, the inter-agent relative state $x_i − x_j$ is unavailable. Therefore, the n agents are divided into m(≤ n) subgroups, and utilize the relative group information replacing of inter-agent information as the control input to update the agent state.
 
-For example，At each time, all the agents are divided into two subgroups by certain probability, and the agents belonging to the same subgroup share a common control input. and thus each agent updates its own state via the relative group information 
+For example，At each time, all the agents are divided into two subgroups by certain probability（prɑːbəˈbɪləti）, and the agents belonging to the same subgroup share a common control input. and thus each agent updates its own state via the relative group information 
 
 
 P4
 
-When subgroup number is 2, the relative group information is $f_{G_1}(k) − f_{G_2}(k)$. The control law is as follows
+When subgroup number is 2, the relative group information is $f_{G_1}(k) − f_{G_2}(k)$. The control law（lɔː） is given as
 
- where $\gamma$ > 0 is a weighting parameter;  $f_{G_1}(k)$ denote the convex combination of states for all the agents in subgroup $G_I$ ,
+minus
+
+ where $\gamma$ > 0 is a weighting parameter（pəˈræmɪtər）;  $f_{G_1}(k)$ denote the convex combination of states for all the agents in subgroup $G_I$ ,
  
- where a is nonnegative coefficient satisfying $\sum a =1$ , 
+ where a is nonnegative coefficient satisfying（ˈsætɪsfaɪɪŋ） $\sum a =1$ , 
 
 
 P5
 Using formula $f_{G_1}(k)$ and system , we could obtain the overall system as：；
 
-the i jth control input in W (k) is ：
+the  control input in W (k) is ：
 
 P6
-Now we give our first main result for the scenario of two subgroups：
-When all the agents are divided into two subgroups, the system (1) under control law (4) achieves
-consensus in mean if and only if γ > 1.
+Now we give our first main result for the scenario（səˈnærioʊ） of two subgroups：
+When all the agents are divided into two subgroups, the system (1) under control law (4) achieves consensus in mean if and only if γ > 1.
 
-I will briefly introduce its proof，Consider the following positive definite function：
+I will briefly introduce its proof，Consider the following positive definite（ˈdefɪnət） function：
 
-Suppose γ > 1, it is obtained from (6) that
+using the system and control law， We can infer this 
+Suppose γ > 1, the system reaches consensus in mean.
+
+infinity 
 
 
 P7:
 It can be known from experiments
 The system reaches consensus with γ = 1.2 > 1，the system reaches consensus in means.
 
+and  $\gamma$ = 0.8,the system reaches diverges(daɪˈvɜːrdʒ)
 
-P8 
-and then I will discusses the scenario of multiple subgroups. Similarly, each agent at time k is partitioned into one of m (≥ 3) subgroups with certain probability. However, only two subgroups $G_I(k)$ and $G_J(k)$ are chosen by Gossip algorithm to update the agents’ states inside. Other subgroups will not be updated and ui (k) = 0. 
-
-
-When all the agents are divided into mul-tiple subgroups, and only two subgroups chosen by Gossip
-algorithm update their agents’ states by (11), the system (1) achieves consensus in mean if γ > 1, and the partition probability for each subgroup is equal.
+P8
+ we apply the proposed algorithm in a smart-car hardware platform to achieve velocity (vəˈlɑːsəti) synchronization. 
+ the initial states are randomly set as shown in Figure. 5. After the consensus algorithm via group information, all the velocities are synchronized, indicating that all the vehicles move towards the same direction with the same speed as Fig. 6.
 
 
-In this case, we also consider the following positive definite function
-
-
-
-
-P9:
-
-In the following, we consider the case of multiple subgroup number m = 5. Similarly, the weighting parameter γ = 1.2 > 1 is considered, and the group partition probability is 1/5. Then the corresponding result as shown below
-
-Finally, we apply the proposed algorithm in a smart-car hardware platform to achieve velocity synchronization. For simplicity of experiment, we use six Corey Mecanum wheel vehicles to validate the algorithm in two subgroups case.
+```
+For simplicity of experiment, we use six Corey Mecanum wheel vehicles(viːək(ə)lz) to validate the algorithm in two subgroups case.
 
 we utilize an OptiTrack system and a computer to track and record the states of the vehicles
 including the location information and velocity information. we utilize an OptiTrack system and
@@ -101,11 +100,42 @@ a computer to track and record the states of the vehicles including the location
 Then each vehicle receives and uses the information of its neighbors from the computer to control its own movement, so
 as to apply the distributed consensus algorithm. The actual speed of each vehicle is about 0.15m/s, and the
 initial states are randomly set as shown in Fig. 5. After theconsensus algorithm via group information, all the velocities are synchronized, indicating that all the vehicles move towards the same direction with the same speed as Fig. 6.
+```
+ 
 
+P9
+and then I will discusses the scenario(səˈnærioʊ_) of multiple subgroups. Similarly, each agent at time k is partitioned into one of m subgroups with certain probability. However, only two subgroups $G_I(k)$ and $G_J(k)$ are chosen by Gossip algorithm to update the agents’ states inside. Other subgroups will not be updated and ui (k) = 0. 
+
+In this case, we also consider the following positive definite function. and only $\gamma$ > 1 ,the system reaches consensus in mean.
+
+```
+When all the agents are divided into mul-tiple subgroups, and only two subgroups chosen by Gossip
+algorithm update their agents’ states by (11), the system (1) achieves consensus in mean if γ > 1, and the partition probability for each subgroup is equal.
+
+
+In this case, we also consider the following positive definite function
+```
+
+
+
+P10:
+
+In the following, we consider the case of multiple subgroup number m = 5. Similarly(ˈsɪmələrli), the weighting parameter γ = 1.2 > 1 is considered, the system reaches consensus in mean.
+
+P11
+Thank u for your attention
+
+
+
+thanks for your question
+
+
+Thank u for your attention
 
 英文字符：
 “2-1”读作：two minus one
 “1+1”读作：one plus one
 “2>1”读作：Two is greater than one.
 “1<2”读作 One is less than two.
+1/5 one fifth
 https://language.chinadaily.com.cn/2016-02/24/content_23607321.htm
