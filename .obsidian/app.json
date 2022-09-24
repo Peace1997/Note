@@ -3,5 +3,6 @@
   "rightToLeft": false,
   "promptDelete": false,
   "alwaysUpdateLinks": true,
-  "communityPluginSortOrder": "download"
+  "communityPluginSortOrder": "download",
+  "readableLineLength": false
 }
