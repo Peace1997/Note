@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "9971a70c08304ab8",
+        "id": "ed1d6cca6d6e4915",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
+            "file": "数据结构/栈和队列.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -62,8 +62,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 249.5,
-    "collapsed": true
+    "width": 249.5
   },
   "right": {
     "id": "e2303acfdb5f9d50",
@@ -87,7 +86,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md"
+                "file": "数据结构/栈和队列.md"
               }
             }
           },
@@ -124,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
+                "file": "数据结构/栈和队列.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
+                "file": "数据结构/栈和队列.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -153,17 +152,17 @@
     "direction": "horizontal",
     "width": 234.5
   },
-  "active": "9971a70c08304ab8",
+  "active": "ed1d6cca6d6e4915",
   "lastOpenFiles": [
-    "面试/投递进展.md",
-    "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
-    "综合/未命名.md",
     "数据结构/线性表.md",
-    "数据结构/img/Pasted image 20220918121258.png",
-    "Pasted image 20220916151231.png",
-    "Pasted image 20220914165816.png",
-    "数据结构/img/Pasted image 20220918171453.png",
-    "数据结构/img/Pasted image 20220918170641.png",
-    "数据结构/img/Pasted image 20220918122622.png"
+    "强化学习/基础知识.md",
+    "LeetCode/二叉树.md",
+    "强化学习/Decision Transformer.md",
+    "综合/Group Partition and Group Information based Multi-agent Consensus Systems.md",
+    "综合/Pytorch常用操作.md",
+    "常用解释.md",
+    "待学汇总.md",
+    "前沿进展.md",
+    "img/pytorch.png"
   ]
 }

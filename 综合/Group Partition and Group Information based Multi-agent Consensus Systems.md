@@ -23,7 +23,7 @@ https://blog.csdn.net/chen77716/article/details/6275762
 ## 演讲稿
 
 P1
-Hello everyone，My name is Mapeixin，I am from Zhejiang sci-tech university . My paper title is "Group Partition and Group Information based Multi-agent Consensus(kənˈsensəs) Systems".
+hello professor ,Hello everyone，My name is Mapeixin，I am from Zhejiang sci-tech university . My paper title is "Group Partition and Group Information based Multi-agent Consensus(kənˈsensəs) Systems".
 
 
 P2
@@ -68,7 +68,7 @@ When all the agents are divided into two subgroups, the system (1) under control
 
 I will briefly introduce its proof，Consider the following positive definite（ˈdefɪnət） function：
 using the system and control law， We can infer this 
-Suppose γ > 1,  $V_x(k+1)< V_x(k)$
+Suppose γ > 1,  $Vx(k+1)< Vx(k)$
 when  k gose to infinity(ɪnˈfɪnəti)
 the system reaches consensus in mean.
 
