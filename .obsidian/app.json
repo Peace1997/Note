@@ -4,5 +4,5 @@
   "promptDelete": false,
   "alwaysUpdateLinks": true,
   "communityPluginSortOrder": "download",
-  "readableLineLength": false
+  "readableLineLength": true
 }
