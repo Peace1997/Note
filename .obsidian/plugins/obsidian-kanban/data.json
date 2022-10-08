@@ -1,5 +1,7 @@
 {
   "date-picker-week-start": 1,
   "new-note-folder": "/",
-  "show-checkboxes": true
+  "show-checkboxes": true,
+  "new-line-trigger": "shift-enter",
+  "hide-card-count": false
 }
