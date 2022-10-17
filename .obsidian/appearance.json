@@ -1,7 +1,9 @@
 {
   "cssTheme": "Things",
   "theme": "system",
-  "textFontFamily": "Songti TC,宋体",
+  "textFontFamily": "Times New Roman,Songti TC,宋体",
   "monospaceFontFamily": "",
-  "baseFontSize": 17
+  "baseFontSize": 17,
+  "interfaceFontFamily": "",
+  "accentColor": ""
 }
