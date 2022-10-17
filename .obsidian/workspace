@@ -7,13 +7,8 @@
         "id": "1da162f5c6949fed",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "数据结构/7. 查找.md",
-            "mode": "source",
-            "backlinks": false,
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -85,9 +80,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "数据结构/7. 查找.md"
-              }
+              "state": {}
             }
           },
           {
@@ -123,7 +116,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "数据结构/7. 查找.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +127,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "数据结构/7. 查找.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,17 +143,17 @@
     "direction": "horizontal",
     "width": 234.5
   },
-  "active": "8c8ac699379c0381",
+  "active": "7e9a8dd8cef8d1b1",
   "lastOpenFiles": [
-    "数据结构/8. 排序.md",
-    "常用解释.md",
-    "统计学习方法/4. 朴素贝叶斯.md",
-    "机器学习/贝叶斯.md",
-    "sort2.png",
-    "sort3.png",
-    "数据结构/img/search1.png",
-    "数据结构/img/search3.png",
+    "未知环境/old/未知环境/论文13-Learning Attentional Communication for Multi-Agent Cooperation.md",
+    "未知环境/old/未知环境/论文14-BicNet: Multiagent Bidirectionally-Coordinated Nets.md",
+    "未知环境/old/未知环境/随笔.md",
+    "未知环境/old/未知环境/img/D*2.png",
+    "未知环境/old/未知环境/img/D* Lite4.png",
+    "未知环境/old/未知环境/img/D* Lite2.png",
+    "未知环境/old/未知环境/img/D* lite.png",
     "数据结构/7. 查找.md",
-    "数据结构/6. 图.md"
+    "数据结构/8. 排序.md",
+    "常用解释.md"
   ]
 }
