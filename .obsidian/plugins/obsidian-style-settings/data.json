@@ -45,5 +45,7 @@
   "things-style@@h5": "0.95em",
   "things-style@@text": "Times New Roman,Songti SC,宋体",
   "things-style@@code-color-l": "#D79B9B",
-  "things-style@@h4-transform": "none"
+  "things-style@@h4-transform": "none",
+  "things-style@@h1-color": "#0E69E8",
+  "things-style@@h1-weight": 800
 }
