@@ -38,14 +38,14 @@
   "things-style@@line-height": 1.7,
   "things-style@@editor-font-size": 1.1,
   "things-style@@default-font-color": false,
-  "things-style@@strong-color": "#E0779F",
   "things-style@@text-editor": "Times New Roman,Songti SC,宋体",
-  "things-style@@em-color": "#A391DA",
   "things-style@@h4-color": "#E69818",
   "things-style@@h5": "0.95em",
   "things-style@@text": "Times New Roman,Songti SC,宋体",
   "things-style@@code-color-l": "#D79B9B",
   "things-style@@h4-transform": "none",
   "things-style@@h1-color": "#0E69E8",
-  "things-style@@h1-weight": 800
+  "things-style@@h1-weight": 800,
+  "things-style@@em-color": "#D25E5E",
+  "things-style@@strong-color": "#E1729D"
 }
