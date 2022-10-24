@@ -35,5 +35,9 @@
   "things-style@@h1-color": "#0E69E8",
   "things-style@@h1-weight": 800,
   "things-style@@em-color": "#D25E5E",
-  "things-style@@strong-color": "#E1729D"
+  "things-style@@strong-color": "#E380A7",
+  "things-style@@quote-color": "#9C64A1",
+  "things-style@@h1-size": "1.8em",
+  "things-style@@h3-size": "1.2em",
+  "things-style@@h4-size": "1.1em"
 }
