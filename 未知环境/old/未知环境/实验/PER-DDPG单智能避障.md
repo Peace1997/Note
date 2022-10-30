@@ -2,7 +2,7 @@
 
 
 
-![multiple-turtlebot-collision-avoidance](../img/multiple-turtlebot-collision-avoidance.png)
+![multiple-turtlebot-collision-avoidance](/img/multiple-turtlebot-collision-avoidance.png)
 
 
 
@@ -10,8 +10,8 @@
 
 人类玩家操纵机器人进行移动，与此同时会记录移动过程中的 state、action、reward、next_state、done信息，将其保存在mat文件中。在训练开始前会将这些数据，提取出来，输入到优先经验回放池中。
 
-<img src="/Users/mapeixin/Library/Application Support/typora-user-images/image-20211007152157041.png" alt="image-20211007152157041" style="zoom:50%;" />
-
+<img src="/image-20211007152157041.png" alt="image-20211007152157041" style="zoom:50%;" />
+![]("/image-20211007152157041.png)
 论文参考：**Accelerated Sim-to-Real Deep Reinforcement Learning: Learning Collision Avoidance from Human Player** 
 
 

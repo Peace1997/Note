@@ -12,9 +12,12 @@
 
 - 可选目标点计算：
   $$
-  x: robot\_position\_x + range\_max*\sin\theta \\
+  \begin{align*}
+ x: robot\_position\_x + range\_max*\sin\theta \\
   y: robot\_position\_y - range\_max*\cos\theta \\
   \theta:index*angle\_increment  + robot\_position\_z + (\pi/2-angle\_max)
+\end{align*}
+ 
   $$
 
   > $range\_max$: 3.5m
@@ -43,14 +46,16 @@
 
 - 位置选择计算公式2
   $$
+  \begin{align*}
   \Omega_{i k}=\alpha d_{i k}+\beta \phi_{i k} - \gamma l_{i k} \\
   \alpha + \beta + \gamma =1
+\end{align*}
+
   $$
   其中 $d_{i k}$  （机器人当前位置/上一次目标点的位置  与下一个可选目标点的距离）和 $\phi_{i k}$ （机器人初始位置与可选目标点的距离）在这里都表示直线距离。其中$l_{ik}$表示在交流范围内，与其他智能体之间的距离。$\alpha、 \beta 、 \gamma$  分别取值为 0.2、0.6、0.2
 
   > 因为在判断机器人是否到达目标点时，小于一定距离即可认为到达目标点，因此将上一次目标点的位置作为$d_{ik}$的距离，就可以使得$d_{ik}$的值为可变值。
-  >
-  > 
+
 
 - 初始选点：
 
@@ -74,9 +79,9 @@ $$
 >
 > 公式分子，即为每次采用不同方式建图，图片的free区域数量。
 
-![image-20211112150437986](/Users/mapeixin/Documents/Typora/未知环境/实验/img/true_map.png)
+![image-20211112150437986](img/true_map.png)
 
-![test_map](/Users/mapeixin/Documents/Typora/未知环境/实验/img/test_map.png)
+![test_map](img/test_map.png)
 
 三个智能体，使用Vornoi分区 + 位置选择公式。 五次平均用时: 55s
 

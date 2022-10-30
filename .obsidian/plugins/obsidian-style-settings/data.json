@@ -30,7 +30,7 @@
   "blue-topaz-theme@@text-highlight-bg-h-light": 34,
   "things-style@@default-font-color": false,
   "things-style@@h4-color": "#E69818",
-  "things-style@@code-color-l": "#D79B9B",
+  "things-style@@code-color-l": "#DC9D9D",
   "things-style@@h4-transform": "none",
   "things-style@@h1-color": "#0E69E8",
   "things-style@@h1-weight": 800,
@@ -39,5 +39,6 @@
   "things-style@@quote-color": "#9C64A1",
   "things-style@@h1-size": "1.8em",
   "things-style@@h3-size": "1.2em",
-  "things-style@@h4-size": "1.1em"
+  "things-style@@h4-size": "1.1em",
+  "things-style@@code-color-d": "#DBA8A8"
 }
