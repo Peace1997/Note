@@ -1,0 +1,34 @@
+{
+  "obsidian-mind-map:app:markmap-preview": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": "M"
+    }
+  ],
+  "calendar:open-weekly-note": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": "W"
+    }
+  ],
+  "obsidian-enhancing-mindmap:Create New MindMap": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": ","
+    }
+  ],
+  "obsidian-enhancing-mindmap:Toggle to markdown or mindmap": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": "."
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "main": {
+    "id": "0c567a630ecfaa34",
+    "type": "split",
+    "children": [
+      {
+        "id": "c3abb8f0127dd3b2",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "基于深度强化学习的四足机器人运动控制总结报告.md",
+            "mode": "source",
+            "backlinks": true,
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b48ddd37b4f1fb5e",
+    "type": "split",
+    "children": [
+      {
+        "id": "3a08d5f7023f09b0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ee12a333bbcb291a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "c4ee389211c5c513",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 215.5
+  },
+  "right": {
+    "id": "c6474a07538f9f67",
+    "type": "split",
+    "children": [
+      {
+        "id": "58857413c0c9aabd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2b31496919e0db47",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "基于深度强化学习的四足机器人运动控制总结报告.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8efaadeafb71cb03",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "da8fe85b18f9ecc1",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          },
+          {
+            "id": "dc03e3307a05f74e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "基于深度强化学习的四足机器人运动控制总结报告.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 286.5,
+    "collapsed": true
+  },
+  "active": "c3abb8f0127dd3b2",
+  "lastOpenFiles": [
+    "综合.md",
+    "MPC算法.md",
+    "Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning 1.pdf",
+    "方案.md",
+    "贝叶斯优化.md",
+    "软件代码说明书.md",
+    "四足机器人仿真平台调研.md",
+    "Isaac Sim.md",
+    "img/Pasted image 20220914143637.png",
+    "img/Pasted image 20220920142610.png"
+  ]
+}
