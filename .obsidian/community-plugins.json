@@ -1,13 +1,13 @@
 [
   "calendar",
-  "easy-typing-obsidian",
   "obsidian-git",
   "table-editor-obsidian",
   "obsidian-style-settings",
-  "quick-latex",
   "remember-cursor-position",
   "obsidian-embedded-code-title",
   "highlightr-plugin",
   "obsidian-image-toolkit",
-  "obsidian-kanban"
+  "obsidian-kanban",
+  "easy-typing-obsidian",
+  "quick-latex"
 ]
