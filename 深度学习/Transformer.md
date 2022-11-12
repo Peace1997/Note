@@ -12,7 +12,7 @@
 
 *Transformer 的结构是什么样？*
 
-包含一个编码层 Encoders 和解码层 Decoders，在 Encoders、Decoders 中存在多个小编码器 Encode、小解码器 Decode。
+包含一个**编码层** Encoders 和**解码层** Decoders，在 Encoders、Decoders 中存在多个小编码器 Encode、小解码器 Decode。
 
 对于每个编码器 encode，它的输入是前一个编码器的输出。
 对于每个解码器 decode，它的输入 包括两个部分：前一个解码器的输出+整个编码层 Encoders 的输出。
