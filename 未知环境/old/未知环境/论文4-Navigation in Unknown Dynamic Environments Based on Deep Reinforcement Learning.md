@@ -42,7 +42,7 @@
 
 ### 2. MK-A3C算法流程图
 
-![](img/Paper4_1.png)
+![](未知环境/old/未知环境/img/Paper4_1.png)
 MK-A3C算法流程：（两个阶段：offline阶段和online阶段）
 
 - offline阶段（训练）
