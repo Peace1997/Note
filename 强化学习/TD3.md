@@ -1,0 +1,63 @@
+
+
+Twin Delayed DDPG Deep Deterministic Policy Gradient
+
+# 一、 背景
+
+DDPG有的时候能够达到不错的效果，但是在很多情况下它对超参数以及一些其他参数的调整很**敏感**，DDPG一种很常见的失败方式就是它会严重**高估Q值**，从而导致策略的学习也失败，因为在对策略的学习过程中，它使用了Q估计所带来的误差。双延迟DDPG（TD3）通过以下三个关键技巧来解决这一问题。
+
+- 技巧一：**剪切双Q学习（Clipped Double-Q learning）**：TD3学习两个Q函数而不是一个，然后它使用其中较小的Q值来计算贝尔曼误差损失函数的目标值。用来解决Q值过高估计。
+- 技巧二：**延迟策略更新（“Delay” Policy Updates）**：TD3更新策略（及其目标网络）的频率要比Q函数的更新要慢，文章推荐每更新两次Q函数更新一次策略函数。使用目标网络虽然能起到稳定训练的作用，但是如果一个糟糕的策略被过高估计的话，这个错误会持续累计，导致策略网络无法收敛，解决的方法就是使用延迟更新的方法，让策略更新的频率比Critic 更低，这样就可以用Critic有足够的时间稳定Q函数并纠正错误，避免错误的估计影响策略更新。
+- 技巧三：**目标策略平滑（Target Policy Smoothing）**：TD3给目标动作增加了噪音，使得策略更难利用Q函数产生的错误，因为他会随着动作中的变化而平滑Q
+
+把这三个技巧整合到一起，使得TD3算法的性能远远超过DDPG算法
+
+
+##  二、关键方程
+
+TD3同时学习两个Q网络，$Q_{\phi_1}$,$Q_{\phi_2}$，和DDPG学习一个Q函数几乎一样的是，Q函数的训练采用的损失函数均方根误差（MSE），为了说明TD3是怎样去学习的以及他和DDPG有什么不同，我们从误差函数的内部细节讲解而后向外扩展。
+
+#### 2.1 剪切双Q学习
+
+两个Q函数使用同一个目标函数来拟合，目标函数的计算采用两个中较小的Q值：
+$$
+y\left(r, s^{\prime}, d\right)=r+\gamma(1-d) \min _{i=1,2} Q_{\phi_{i, \text { targ }}}\left(s^{\prime}, a^{\prime}\left(s^{\prime}\right)\right)
+$$
+然后，两个网络都基于这个目标通过“回归”的方式进行学习
+$$
+\begin{array}{l}
+L\left(\phi_{1}, \mathcal{D}\right)=\underset{\left(s, a, r, s^{\prime}, d\right) \sim \mathcal{D}}{\mathrm{E}}\left[\left(Q_{\phi_{1}}(s, a)-y\left(r, s^{\prime}, d\right)\right)^{2}\right] \\
+\left.L\left(\phi_{2}, \mathcal{D}\right)=\underset{\left(s, a, r, s^{\prime}, d\right) \sim \mathcal{D}}{\mathrm{E}}\left[Q_{\phi_{2}}(s, a)-y\left(r, s^{\prime}, d\right)\right)^{2}\right]
+\end{array}
+$$
+使用较小的 Q 值用于目标值的计算可以**避开 Q 函数的过高估计的问题**
+
+#### 2.2 目标策略平滑
+
+目标Q-Learning在计算的时候用的是目标策略$u_{{\theta_{targ}}}$的输出，但是这种动作的每一个元素都被加上了“剪切”噪声，在增加剪切噪声之后，目标动作被限制在合法的范围之内（$\alpha_{Low} \leq \alpha \leq\alpha_{high}$）,因此目标动作变为：
+$$
+a^{\prime}\left(s^{\prime}\right)=\operatorname{clip}\left(\mu_{\theta_{\text {targ }}}\left(s^{\prime}\right)+\operatorname{clip}(\epsilon,-c, c), a_{\text {Low }}, a_{\text {High }}\right), \quad \epsilon \sim \mathcal{N}(0, \sigma)
+$$
+目标策略的平滑的本质在算法中扮演着“正则化项”的角色，它解决了在DDPG中可能发生的特定故障模式：如果Q函数的近似器为某些动作赋予了错误的“最大值”，策略很快利用这个“最大值”并且产生一些不正确的行为。这可以通过在类似的动作上平滑Q函数来避免，目标策略平滑就是用来实现这一问题的。
+
+#### 2.3 最大化$Q_{\phi_1}$
+
+最后，策略函数的学习仅仅是最大化$Q_{\phi_1}$:
+$$
+\max _{\theta} \underset{s \sim \mathcal{D}}{\mathrm{E}}\left[Q_{\phi_{1}}\left(s, \mu_{\theta}(s)\right)\right]
+$$
+这和DDPG基本一样，然后在TD3中，策略的更新频率比Q函数的更新频率要低，这有助于减少DDPG中通常出现的波动，因为策略的更新会改变目标函数。
+
+
+
+### 3. 开发和探索
+
+TD3以 off-policy 的形式训练一个确定性策略，因为策略是确定性的，如果策略以 on-policy 的形式进行探索，在一开始的时候，或许不会去尝试大范围的去尝试不同的动作，从而无法学习到有用的信号，为了让TD3策略**探索的更好**，我们在训练过程中在动作上增加了噪声，一般是不相关的零均值高斯噪声。为了方便获得高质量的训练数据，可以**在训练过程中减少噪声**的规模（在实际操作中，通常保持噪声范围不变）
+
+在测试时，为了去查看策略如何利用它所学到的东西，通常不需要在动作中加入噪声。
+
+> 我们的TD3在训练开始时，使用一种技巧来提高探索程度，在开始的几个固定的步数内（`start_steps`），智能体的动作时在合法的均匀随机分布的动作空间中采样获得，在那之后，恢复正常的TD3利用机制
+
+### 4. 伪代码
+
+![[TD3.png]]
