@@ -17,4 +17,4 @@
 # Hybrid A*
 
 在扩展节点时需要考虑连续运动学模型，但控制和时间是离散化的
-![[Hybrid_A*.png]]
+![[hybrid_A_star.png]]

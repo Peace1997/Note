@@ -8,7 +8,7 @@ INFORMATION SYSTEMS FRONTIERS  6.191
 
 ## 1. 简述
 
-- **整体流程：**本文基于双重结构模型（dual-model architecture）理论，提出了基于DQN的探索模型和基于DQN的导航模型，通过一定的转换机制，解决快速发现未探索区域和跳出局部最优解的问题。
+- **整体流程：** 本文基于双重结构模型（dual-model architecture）理论，提出了基于DQN的探索模型和基于DQN的导航模型，通过一定的转换机制，解决快速发现未探索区域和跳出局部最优解的问题。
 - **主要问题解决**：
   - 跳出局部最优解（模型转换）
   - 尽可能避免重复探索（区域计数）
@@ -51,15 +51,15 @@ INFORMATION SYSTEMS FRONTIERS  6.191
 
 **模型参数**
 
-- $$\alpha$$ :Reward Function Balance Adjustment Parameters : 平衡每个小奖励对总奖励的影响。
-- $$\beta_i$$:Stage Task（？）：将地图进行划分为几个阶段，即任务分阶段完成，并设计了不同阶段之间的关系，得分越高，越稳定。
+- $\alpha$ :Reward Function Balance Adjustment Parameters : 平衡每个小奖励对总奖励的影响。
+- $\beta_i$:Stage Task（？）：将地图进行划分为几个阶段，即任务分阶段完成，并设计了不同阶段之间的关系，得分越高，越稳定。
 
-- $$MGR_n$$:Map Reward Value：建图差值
+- $MGR_n$:Map Reward Value：建图差值
   $$
   S=\operatorname{size}\left(M G R_{n}\right)-\operatorname{size}\left(M G R_{n-1}\right)
   $$
 
-- $$flag_{(i,j)}$$:Calculation of Steps in Individual Areas：记录机器人在每个方格上走过的次数，目的是驱使机器人每轮都更倾向于未探测区域。
+- $flag_{(i,j)}$:Calculation of Steps in Individual Areas：记录机器人在每个方格上走过的次数，目的是驱使机器人每轮都更倾向于未探测区域。
 
   - 机器人的预设初始位置为（0,0,0）
   - 每个网格的中心位置代表该网格的代表坐标点
@@ -74,9 +74,9 @@ BE中通过区域计数的方法虽然可以避免重复探索，但训练过程
 ### 2.4 DQN模型设计
 
 **State：**
-$$
+$
 \text { State }=\operatorname{LDS}([\mathrm{n}])+\text { Map's growth rate }(\mathrm{n})+\text { Flag }(\mathrm{n})
-$$
+$
 
 > 激光雷达传感器的距离数据信息 +  建图差值 + 当前状态下在该方格区域走过的次数
 
@@ -85,15 +85,15 @@ $$
 直行 + 线速度  +  角速度 （3dim）
 
 **Reward：**
-$$
+$
 R_{f}=-p o w\left(2, f l a g_{(i, j)}\right) \\
 R_{g}=M G R_{t} \cdot \alpha \cdot \beta \\
 \mathrm{R}=R_{f}+R_{g}
-$$
+$
 
-> $$R_f$$:机器人前往某个方格区域的次数越多，惩罚越大
+> $R_f$:机器人前往某个方格区域的次数越多，惩罚越大
 >
-> $$R_g$$：建图越快，奖励越大。
+> $R_g$：建图越快，奖励越大。
 
 **网络结构**
 
@@ -103,9 +103,9 @@ $$
 
 ### 3.1 探索模型实验
 
-**选择最合适的 $$\alpha$$ :（Reward Function Balance Adjustment Parameters : ）**
+**选择最合适的 $\alpha$ :（Reward Function Balance Adjustment Parameters : ）**
 
-$$\alpha$$ 设置的范围为5-10，观察奖励函数的变化情况。
+$\alpha$ 设置的范围为5-10，观察奖励函数的变化情况。
 
 <img src="../../../Library/Application Support/typora-user-images/image-20220514111950628.png" alt="image-20220514111950628" style="zoom:50%;" />
 
