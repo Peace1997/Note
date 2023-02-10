@@ -17,6 +17,8 @@ Transformer是一种深度学习模型，用于处理序列数据。它是一种
 
 ## Transformer 的结构
 
+![[Transform1.png]]
+
 主要包含一个编码层（Encoders） 和解码层（Decoders） ，在 Encoders、Decoders 中存在多个小编码器 Encode、小解码器 Decode。
 
 - 【输入层】：输入一个序列数据，并将每个元素映射为一个词嵌入向量
@@ -54,3 +56,11 @@ Multi-head Attention
 >就是多个人帮我同时理解一句话，我在他们理解的基础上，给出自己的答案
 
 
+
+
+
+
+Seq2Seq model 
+特点：Self- Attention —— 取代 RNN，可同时计算
+
+在self-attention中，序列数据顺序位置不重要；若要考虑位置顺序，则需要人工加入位置信息$e^i$
