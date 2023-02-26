@@ -36,12 +36,14 @@
   "things-style@@strong-color": "#E380A7",
   "things-style@@code-color-d": "#DBA8A8",
   "things-style@@quote-color": "#9B72C1",
-  "things-style@@code-normal": "#E5A7A7",
+  "things-style@@code-normal": "#CC8F8F",
   "things-style@@h1-size": "1.5em",
   "things-style@@h4-size": "1.15em",
   "things-style@@h3-size": "1.25em",
   "things-style@@h2-size": "1.35em",
   "things-style@@h2-weight": 700,
   "things-style@@h2-color": "#2E80F2",
-  "things-style@@h1-color": "#054BEB"
+  "things-style@@h1-color": "#054BEB",
+  "things-style@@h5-size": "1.0em",
+  "things-style@@h3-color": "#71A5EB"
 }
