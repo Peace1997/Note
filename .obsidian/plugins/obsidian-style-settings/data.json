@@ -45,5 +45,7 @@
   "things-style@@h2-color": "#2E80F2",
   "things-style@@h1-color": "#054BEB",
   "things-style@@h5-size": "1.0em",
-  "things-style@@h3-color": "#71A5EB"
+  "things-style@@h3-color": "#71A5EB",
+  "things-style@@tag-background-color-l": "#C4CCC9",
+  "things-style@@tag-font-color-l": "#272A29"
 }
