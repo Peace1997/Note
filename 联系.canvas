@@ -1,9 +1,0 @@
-{
-	"nodes":[
-		{"id":"c1b5ba3403099912","x":-9,"y":-317,"width":250,"height":60,"type":"text","text":"SLAM"},
-		{"id":"49e4690870fb6158","x":-48,"y":-134,"width":250,"height":409,"type":"text","text":""},
-		{"id":"5c98e4fc3644ff03","x":-334,"y":-165,"width":250,"height":348,"type":"text","text":"设 SLAM 问题中待估计的机器人运动参数为 $\\boldsymbol{X}_{0: k}=\\left\\{\\boldsymbol{x}_0, \\boldsymbol{x}_1, \\cdots, \\boldsymbol{x}_k\\right\\}$, 其中 $\\boldsymbol{x}_k$ 表示 $k$ 时刻载体的 位姿参数; 设 SLAM 构建的地图可表示为一组地标 的集合 $\\boldsymbol{M}=\\left\\{\\boldsymbol{m}_1, \\boldsymbol{m}_2, \\cdots, \\boldsymbol{m}_n\\right\\}$, 其中 $\\boldsymbol{m}_n$ 表示第 $n$ 个 地标在地图中的位置。机器人在移动过程中可以 通过传感器对地标进行观测, 这些观测的集合表示 为 $\\boldsymbol{Z}_{0: k}=\\left\\{\\boldsymbol{z}_0, \\boldsymbol{z}_1, \\cdots, \\boldsymbol{z}_k\\right\\}$; 而驱使机器人从 $\\boldsymbol{x}_{k-1}$ 到 $\\boldsymbol{x}_k$ 转移的控制量为 $u_k$, 在移动过程中所有控制量的集 合表示为 $\\boldsymbol{U}_{0: k}=\\left\\{\\boldsymbol{u}_0, \\boldsymbol{u}_1, \\cdots, \\boldsymbol{u}_k\\right\\}$ 。\n\nSLAM 就是根据观测 $\\boldsymbol{Z}_{0: k}$ 和控制输入 $\\boldsymbol{U}_{0: k}$, 估 计运动轨迹 $\\boldsymbol{X}_{0: k}$ 和地标位置 $\\boldsymbol{M}$ 的过程。在 SLAM 算法框架中, 对观测 $\\boldsymbol{Z}_{0: k}$ 的提取部分通常被称为 SLAM 的前端 (front-end) ; 而利用 $\\boldsymbol{Z}_{0: k}$ 和 $\\boldsymbol{U}_{0: k}$ 对运 动轨迹和地标位置进行估计的部分被称为 SLAM 的后端 (back-end), 如图 2 所示。"},
-		{"id":"71578e93aa564679","x":241,"y":-134,"width":250,"height":355,"type":"text","text":"智能体的分布式协调合作能力是多智能体系统 的基础是发挥多智能体系统优势的关键也是整个系统智能 性的体现。"}
-	],
-	"edges":[]
-}
