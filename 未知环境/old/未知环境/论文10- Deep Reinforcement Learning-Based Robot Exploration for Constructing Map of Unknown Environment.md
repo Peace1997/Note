@@ -74,9 +74,9 @@ BE中通过区域计数的方法虽然可以避免重复探索，但训练过程
 ### 2.4 DQN模型设计
 
 **State：**
-$
+$$
 \text { State }=\operatorname{LDS}([\mathrm{n}])+\text { Map's growth rate }(\mathrm{n})+\text { Flag }(\mathrm{n})
-$
+$$
 
 > 激光雷达传感器的距离数据信息 +  建图差值 + 当前状态下在该方格区域走过的次数
 

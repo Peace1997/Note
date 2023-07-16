@@ -9,7 +9,7 @@ Transformer 是一种深度学习模型，用于处理序列数据。Transformer
 - Decoder 主要根据上下文向量和之前生成的输出序列，生成目标序列的预测。
 >其中Encoder将输入序列编码为一个固定长度的向量，解码器再将向量解码为输出序列。
 
-
+----
 ## 2. Transformer 优势是什么？
 
 利用注意力机制（多头注意力机制）来提高训练速度的模型，支持并行化计算，由于增加了模型的复杂度，使得它在精度和性能上都要优于 RNN 循环神经网络
@@ -24,7 +24,7 @@ Transformer 是一种深度学习模型，用于处理序列数据。Transformer
 
 # 二、Transformer 的结构
 
-![[Transformer1.png]]
+![[Transformer1.png|525]]
 
 主要包含一个编码层（Encoders） 和解码层（Decoders） ，在 Encoders、Decoders 中存在多个编码器 Encode模块、解码器 Decode模块。
 
@@ -55,7 +55,7 @@ $$
 > 2i 表示偶数的维度，2i+1 表示奇数维度。这样的公式计算使 PE 能够适应比训练集里面所有句子更长的句子，假设训练集里面最长的句子是有 20 个单词，突然来了一个长度为 21 的句子，则使用公式计算的方法可以计算出第 21 位的 Embedding。
 
 最后，将词嵌入层与位置编码层相加即可得到Embedding向量**X**，该向量可作为Encoder的输入，例如：
-![[Transformer1.png]]
+
 
 
 ## 2. 编码器层

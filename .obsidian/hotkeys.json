@@ -15,5 +15,15 @@
       ],
       "key": "G"
     }
+  ],
+  "slides:start": [],
+  "marp:open-preview": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "P"
+    }
   ]
 }

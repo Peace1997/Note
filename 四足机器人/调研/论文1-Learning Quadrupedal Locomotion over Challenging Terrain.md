@@ -131,7 +131,7 @@
 
 ## 方法概述
 
-![image-20220628120508171](img/Paper1-1.png)
+![image-20220628120508171](四足机器人/img/Paper1-1.png)
 
 ### Teacher Policy
 
