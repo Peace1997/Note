@@ -1,10 +1,61 @@
 {
+  "Tabout": true,
+  "SelectionEnhance": true,
+  "IntrinsicSymbolPairs": true,
+  "BaseObEditEnhance": true,
+  "FW2HWEnhance": true,
+  "AutoFormat": false,
+  "ExcludeFiles": "",
+  "ChineseEnglishSpace": true,
+  "ChineseNumberSpace": true,
+  "EnglishNumberSpace": true,
+  "ChineseNoSpace": false,
+  "PunctuationSpace": true,
+  "AutoCapital": true,
+  "AutoCapitalMode": "typing",
+  "PunctuationSpaceMode": "typing",
+  "InlineCodeSpaceMode": 1,
+  "InlineFormulaSpaceMode": 1,
+  "InlineLinkSpaceMode": 1,
+  "InlineLinkSmartSpace": true,
+  "UserDefinedRegSwitch": true,
+  "UserDefinedRegExp": ":\\w*:\n{{.*?}}\n<.*?>\n\\[\\!.*?\\][+-]{0,1}",
+  "debug": false,
+  "userSelRepRuleTrigger": [
+    "-",
+    "#"
+  ],
+  "userSelRepRuleValue": [
+    {
+      "left": "~~",
+      "right": "~~"
+    },
+    {
+      "left": "#",
+      "right": " "
+    }
+  ],
+  "userDeleteRulesStrList": [
+    [
+      "demo|",
+      "|"
+    ]
+  ],
+  "userConvertRulesStrList": [
+    [
+      ":)|",
+      "😀|"
+    ]
+  ],
+  "userSelRuleSettingsOpen": true,
+  "userDelRuleSettingsOpen": true,
+  "userCvtRuleSettingsOpen": true,
+  "EnterTwice": false,
+  "TryFixChineseIM": false,
+  "PuncRectify": false,
   "AutoFormatting": true,
   "FormattingWhenLineEnd": true,
-  "ChineseEnglishSpace": true,
-  "ChineseNoSpace": false,
   "Capitalization": false,
-  "PunctuationSpace": true,
   "EnglishSpace": true,
   "BraceSpace": true,
   "NumberSpace": true,
@@ -13,8 +64,6 @@
   "LinkSpace": true,
   "LinkSmartSpace": true,
   "FullWidthCharacterEnhance": true,
-  "UserDefinedRegExp": ":\\w*:\n{{.*?}}\n<.*?>\n\\[\\!.*?\\][+-]{0,1}",
-  "UserDefinedRegSwitch": true,
   "UserPartSpace": true,
   "Debug": false
 }

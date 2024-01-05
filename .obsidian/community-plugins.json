@@ -1,6 +1,5 @@
 [
   "calendar",
-  "obsidian-git",
   "table-editor-obsidian",
   "obsidian-style-settings",
   "remember-cursor-position",
@@ -12,5 +11,7 @@
   "quick-latex",
   "obsidian-mind-map",
   "marp-slides",
-  "mousewheel-image-zoom"
+  "mousewheel-image-zoom",
+  "khoj",
+  "obsidian-git"
 ]
