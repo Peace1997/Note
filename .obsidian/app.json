@@ -13,5 +13,7 @@
     "downscalePercent": 83
   },
   "autoPairBrackets": true,
-  "attachmentFolderPath": "./img"
+  "attachmentFolderPath": "./img",
+  "strictLineBreaks": false,
+  "propertiesInDocument": "visible"
 }
