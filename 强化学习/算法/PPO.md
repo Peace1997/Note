@@ -1,7 +1,3 @@
----
-aka description: Proximal Policy Optimization 近端策略优化
-tags:
----
 
 # 一、PPO简述
 
@@ -25,7 +21,7 @@ PPO 算法 1 是解决了 TRPO 算法在使用重要性采样时没有对加权�
 - 第一重循环：将收集到的数据训练多个Epoch
 - 第二重循环：在某一个Epoch内，将数据划分为多个mini-batch进行更新。
 （3）网络更新
-- 策略更新：截断式优化目标+悲观约束
+- 策略更新：截断式优化目标
 - 价值函数更新：结合多步时序差分方法
 ## PPO & TRPO 
 
