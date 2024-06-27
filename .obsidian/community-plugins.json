@@ -7,14 +7,13 @@
   "obsidian-image-toolkit",
   "obsidian-kanban",
   "easy-typing-obsidian",
-  "quick-latex",
   "obsidian-mind-map",
   "marp-slides",
   "mousewheel-image-zoom",
   "khoj",
-  "obsidian-git",
   "obsidian-day-planner",
   "dataview",
   "copilot",
-  "obsidian-full-calendar"
+  "obsidian-full-calendar",
+  "obsidian-git"
 ]

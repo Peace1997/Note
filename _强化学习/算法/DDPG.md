@@ -83,7 +83,7 @@ DDPG以off-policy的方式来训练确定性策略，因为该策略是确定性
 
 ## DDPG伪代码
 
-![](img/ddpg.png)
+![](ddpg.png)
 
 > 对于actor、critic网络的更新：
 >

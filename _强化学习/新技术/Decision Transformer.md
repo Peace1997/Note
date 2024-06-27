@@ -25,7 +25,7 @@ DT和行为克隆（behavioural cloning；BC）的核心区别在于DT建模了r
 如同传统的自回归模型
 
 
-![](img/architecture.gif)
+![](architecture.gif)
 
 输入： $(\hat{R}_1, s_1, a_1, \hat{R}_2, s_2, a_2, \cdots, \hat{R}_T, s_T)$
 
