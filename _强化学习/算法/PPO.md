@@ -32,7 +32,7 @@ $$ L^{C L I P}(\theta)=\hat{\mathbb{E}}_t\left[\min \left(r_t(\theta) \hat{A}_t,
   
 # 三、价值网络
 对于PPO1和PPO2的价值网络，通过最小化价值函数损失来更新网络参数：
-$$L^{VF}_t = \hat{\mathbb{E}}\left[(V_\theta(s_t) - V^{target}_t)^2\right]$$
+$$L^{VF}_t=\hat{\mathbb{E}}\left[(V_\theta(s_t)-V^{target}_t)^2\right]$$
 
 - $V_{\theta}(s_t)$：$s_t$状态下预测价值
 - $V_{target}$$：$$s_t$状态下真实价值，可通过rewards-to-go计算
@@ -47,7 +47,7 @@ $$\begin{aligned} \hat{A}_t^{\mathrm{GAE}(\gamma, \lambda)} & =\sum_{l=0}^{\inft
 
 - $\gamma$是折扣因子（Discount Factor）
 - $\lambda$是 GAE 的平滑参数（介于0和1之间，平衡方差与偏差）
-- $\delta$是时序差分误差（Temporal Difference Error）：$$\delta_{t}^V = r + V(s_{t+1}) - V(s_t)$$
+- $\delta$是时序差分误差（Temporal Difference Error）：$$\delta_{t}^V=r+V(s_{t+1})-V(s_t)$$
 
 详细推导可见：
 ![[Pasted image 20240607153626.png]]
