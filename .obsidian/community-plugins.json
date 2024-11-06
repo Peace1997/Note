@@ -10,10 +10,9 @@
   "obsidian-mind-map",
   "marp-slides",
   "mousewheel-image-zoom",
-  "khoj",
   "obsidian-day-planner",
   "dataview",
-  "copilot",
   "obsidian-full-calendar",
-  "obsidian-git"
+  "obsidian-git",
+  "obsidian-textgenerator-plugin"
 ]
