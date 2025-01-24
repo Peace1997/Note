@@ -61,6 +61,103 @@ VAE 的实现与普通 Autoencoder 有一些相似之处，但在细节上有很
 
 # Basics
 
+## 工作原理
+
+### 1. 数学建模 
+ **1. 潜在变量模型假设**
+VAE 假设数据 $x$ 是由潜在变量 $z$ 生成的，生成的过程遵循：
+1. 从先验分布 $p(z)$ 中采样潜在变量 $z$   --- Encoder
+2. 根据 $z$ 的值生成数据 $x$ ，即 $p_\theta(x|z)$  --- Decoder
+
+目标是学习到 $p(z)$ 和  $p_\theta(x|z)$ ，从而可以生成新的数据样本。
+
+### 2. 目标函数
+
+**1. 最大化边际似然估计** [[常用解释#最大化边际似然]]
+
+根据潜在变量模型假设的目标，为了尽可能生成我们期望的数据样本，我们需要最小化我们期望的数据真实分布 $p_\mathrm{data}(x)$ 和预测的模型分布 $p_\theta(x)$ 的 KL 散度，即最大化 $\log p_\theta(x)$：
+$$\log p_\theta(x) =\log\int p_\theta (x,z) dz= \log \int p_\theta(x|z)p(z) \, dz$$
+但由于积分难以直接求解，VAE 使用变分推断，尝试逼近。
+
+
+----
+*目标公式推导*
+最大化 $\log p_\theta(x)$ 等价于最小化数据真实分布 $p_\mathrm{data}(x)$ 和模型分布 $p_\theta(x)$ 的 KL 散度，公式为：
+$$D_{\mathrm{KL}}(p_{\mathrm{data}}(x)\|p_{\theta}(x))=\mathbb{E}_{p_{\mathrm{data}}(x)}\left[\log p_{\mathrm{data}}(x)-\log p_{\theta}(x)\right]$$
+由于$\mathbb{E}_{p_\mathrm{data}(x)}[\log p_\mathrm{data}(x)]$是一个常数 (与模型无关), 最小化$D_\mathrm{KL}$等价于最大化期望对数似然：$\mathbb{E}_{p_\text{data}(x)}[\log p_\theta(x)].$。
+
+
+
+**2. 变分推理**
+
+VAE 引入一个近似分布 $q_\phi(z|x)$ ，用于近似 $p_\theta(z|x)$ ，通过**证据下界**（Evidence Lower Bound, ELBO ）对 $logp_\theta(x)$ 进行下界逼近：
+$$\log p_\theta(x) \geq \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))$$
+等价于：
+$$\mathcal{L}(\theta, \phi; x) = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))$$
+- **重构误差 $\log p_\theta(x|z)$ ：** 表示从潜在变量 z 生成数据 x 的准确性。最大化这一项能提升生成数据的质量。
+- **KL 散度 $D_{\text{KL}}(q_\phi(z|x) \| p(z))$** ： 衡量近似分布 $q_\phi(z|x)$ 和先验分布$p(z)$之间的差异。通过最小化这一项，可以使潜在空间中的分布符合先验假设。
+
+最大化 ELBO 同时在优化数据重构能力和正则化潜在空间结构，这正是 VAE 的设计目标。
+
+---
+*证据下界推导*
+证据下界用于近似计算数据的边际对数似然$\log p_\theta(x)$，由于直接计算$\log p_\theta(x)$通常非常困难，ELBO 提供了一个可计算的下界，优化 ELBO 可以间接优化 $\log p_\theta(x)$。
+
+为了简化计算，引入一个变分分布 $q_\phi(z|x)$，它是对后验分布 $p_\theta(z|x)$ 的一种近似。通过 **对数的性质**，将 $\log p_\theta(x)$ 重写为：
+$$\log p_\theta(x) = \log \int q_\phi(z|x) \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
+由于log 是凹函数，可以使用 **Jensen 不等式** 将其向外移到积分外：
+$$\log \int q_\phi(z|x) \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz \geq \int q_\phi(z|x) \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
+
+右侧的表达式即为$\log p_\theta(x)$的一个下界，这就是 **证据下界（ELBO）**：
+$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
+或者更直观地写成期望形式：
+$$\mathcal{L}(\theta, \phi) = \mathbb{E}_{z \sim q_\phi(z|x)} \left[ \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \right]$$
+
+将联合分布 $p_\theta(x, z) = p_\theta(x|z)p_\theta(z)$代入：
+$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log \frac{p_\theta(x|z)p_\theta(z)}{q_\phi(z|x)} \, dz$$
+拆分成两部分：
+$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log p_\theta(x|z) \, dz + \int q_\phi(z|x) \log \frac{p_\theta(z)}{q_\phi(z|x)} \, dz$$
+
+重写为期望形式：
+$$\mathcal{L}(\theta, \phi) = \mathbb{E}_{z \sim q_\phi(z|x)} \left[ \log p_\theta(x|z) \right] - \text{KL}(q_\phi(z|x) \| p_\theta(z))$$
+
+VAE 的优化目标是 **最大化 ELBO**，以更好地拟合数据分布并提高生成质量
+
+[[常用解释#Jensen 不等式]]
+### 3. 学习过程
+通过先验分布 $p(z)$ 和解码器 $p_\theta(x|z)$ 的组合，能够生成尽可能逼近数据分布 $p(x)$ 的样本。
+
+**1. 编码器：学习近似后验分布**
+编码器网络将数据 x 映射到潜在变量的分布参数（均值 $\mu$ 和对数方差 $\log\sigma^2$），定义近似后验分布：
+$$q_\phi(z|x) = \mathcal{N}(z; \mu_\phi(x), \text{diag}(\sigma_\phi^2(x)))$$
+
+**2. 采样潜在变量**
+从分布$q_\phi(z|x)$ 中采样 z。  
+为了使梯度可传播，使用 **重参数化技巧**：
+$$z = \mu_\phi(x) + \sigma_\phi(x) \cdot \epsilon, \quad \epsilon \sim \mathcal{N}(0, I)$$
+将随机变量 $z$ 的采样过程转化为一个确定性可微的操作，解决了随机采样无法直接传播梯度的问题。
+
+**3. 解码器：生成数据**
+解码器网络根据采样的 z 生成数据分布 $p_\theta(x|z)$，通常假设为高斯分布：
+$$p_\theta(x|z) = \mathcal{N}(x; f_\theta(z), \sigma^2 I)$$
+
+**4. 损失函数**
+VAE的目标是**最大化 ELBO**，对应的损失函数为：
+$$
+\mathcal{L}(\theta, \phi; x) = \text{重构损失} + \text{KL散度正则化}
+$$
+具体形式：
+$$\mathcal{L} = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))
+$$
+
+在 VAE 中，我们希望最大化数据的边际对数似然，直接优化边际对数似然很困难，因为需要计算复杂的积分$\int p_\theta(x, z) dz$。因此，VAE 引入了变分分布 $q_\phi(z|x)$，用它来近似后验分布 $p_\theta(z|x)$，并将目标重新表述为最大化 ELBO。
+
+--- 
+**先验分布**：
+在 VAE 中，先验分布 $p(z)$ 是一个人为选择的分布，它是生成模型的一部分，用来描述潜在空间 $z$ 的结构。希望通过先验分布 $p(z)$ 和解码器 $p_\theta(x|z)$ 的组合，能够生成尽可能逼近数据分布 $p(x)$ 的样本。
+
+[[常用解释#先验分布]]
+
 ## Autoencoder
 
 Autoencoder（自编码器）是一种**无监督学习模型**，通过编码-解码结构学习数据的压缩和重构。
@@ -104,42 +201,6 @@ Autoencoder（自编码器）是一种**无监督学习模型**，通过编码-�
 似然分布（likelihood distribution） q (z|x) ：对于给定潜在向量 z ，重建图像 x 的概率。--- 对应Encoder
 
 重参化（reparameterization）
-
-## 工作原理
-
-### 数学建模 
- **1. 潜在变量模型假设**
-VAE 假设数据 $x$ 是由潜在变量 $z$ 生成的，生成的过程遵循：
-1. 从先验分布 $p(z)$ 中采样潜在变量 $z$   --- Encoder
-2. 根据 $z$ 的值生成数据 $x$ ，即 $p_\theta(x|z)$  --- Decoder
-
-目标是学习到 $p(z)$ 和  $p_\theta(x|z)$ ，从而可以生成新的数据样本。
-
-### 目标函数
-
-**1. 最大化边际似然估计** [[常用解释#最大化边际似然]]
-
-根据潜在变量模型假设的目标，为了尽可能生成我们期望的数据样本，我们需要最小化我们期望的数据真实分布 $p_\mathrm{data}(x)$ 和预测的模型分布 $p_\theta(x)$ 的 KL 散度，即最大化 $\log p_\theta(x)$：
-$$\log p_\theta(x) = \log \int p_\theta(x|z)p(z) \, dz$$
-但由于积分难以直接求解，VAE 使用变分推断，尝试逼近。
-
-
-----
-最大化 $\log p_\theta(x)$ 等价于最小化数据真实分布 $p_\mathrm{data}(x)$ 和模型分布 $p_\theta(x)$ 的 KL 散度，公式为：
-$$D_{\mathrm{KL}}(p_{\mathrm{data}}(x)\|p_{\theta}(x))=\mathbb{E}_{p_{\mathrm{data}}(x)}\left[\log p_{\mathrm{data}}(x)-\log p_{\theta}(x)\right]$$
-由于$\mathbb{E}_{p_\mathrm{data}(x)}[\log p_\mathrm{data}(x)]$是一个常数 (与模型无关), 最小化$D_\mathrm{KL}$等价于最大化期望对数似然：$\mathbb{E}_{p_\text{data}(x)}[\log p_\theta(x)].$。
-
-
-
-**2. 变分推理**
-
-VAE 引入一个近似分布 $q_\phi(z|x)$ ，用于近似 $p_\theta(z|x)$ ，通过证据下界（Evidence lowere）对 $logp_\theta(x)$ 进行下界逼近：
-$$\log p_\theta(x) \geq \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))$$
-等价于：
-$$\mathcal{L}(\theta, \phi; x) = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))$$
-
-
-
 
 # 总结
 
