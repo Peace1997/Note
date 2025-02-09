@@ -46,7 +46,8 @@ $$L^{VF}_t=\hat{\mathbb{E}}\left[(V_\theta(s_t)-V^{target}_t)^2\right]$$
 $$\begin{aligned} \hat{A}_t^{\mathrm{GAE}(\gamma, \lambda)} & =\sum_{l=0}^{\infty}(\gamma \lambda)^l \delta_{t+l}^V \end{aligned}$$
 
 - $\gamma$是折扣因子（Discount Factor）
-- $\lambda$是 GAE 的平滑参数（介于0和1之间，平衡方差与偏差）
+- $\lambda$是 GAE 的平滑参数（介于 0 和 1 之间，平衡方差与偏差）
+	- $\lambda$ 越小考虑未来时间步的奖励越少，因此更贴近实际的优势函数（标准优势函数只关注当前时刻的优势值），所以偏差更小，但可能会导致估计结果对每个时间步的变化非常敏感，方差增大，反之亦然。
 - $\delta$是时序差分误差（Temporal Difference Error）：$$\delta_{t}^V=r+V(s_{t+1})-V(s_t)$$
 
 详细推导可见：
