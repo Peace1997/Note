@@ -28,7 +28,7 @@ $$
 
 - $\mathbf{q} \in \mathbb{R}^6$ 是关节角度向量；
 - $\mathbf{p}_{foot} \in \mathbb{R}^3$ 是足端位置, 可通过正运动学求解；
-- $J_f \in \mathbb{R}^{3 \times 6}$ 是足端的线速度雅可比矩阵，如果考虑足端的角速度，则需要扩展雅可比矩阵，使其包括旋转部分；
+- $J_f \in \mathbb{R}^{3 \times 6}$ 是足端的线速度雅可比矩阵，如果考虑足端的角速度，则需要扩展雅可比矩阵，使其包括旋转部分；雅可比矩阵在指的则是机器人末端的位姿（位置与姿态）与机器人各个关节位置值的偏微分关系。[[人形机器人运动学#3. 雅可比矩阵|雅可比矩阵]]
 - $\dot{\mathbf{q}}$ 是关节角速度。
 
 **Python 代码（使用 Pinocchio 计算雅可比矩阵）：**
@@ -48,17 +48,17 @@ J_foot = robot.computeFrameJacobian(q, robot.model.getFrameId("foot_link"), pin.
 ---
 
 ### 1.2 动力学建模
-机器人完整的动力学方程是基于**拉格朗日动力学（Lagrangian Dynamics）** 或**牛顿-欧拉方法（Newton-Euler Method）** 推导出来的。用于将足端力映射到关节力矩关节空间形式（Joint-Space Formulation） 表示如下：
+机器人完整的动力学方程是基于**拉格朗日动力学（Lagrangian Dynamics）** 或**牛顿-欧拉方法（Newton-Euler Method）** 推导出来的。用于将足端力映射到关节力矩关节的空间形式（Joint-Space Formulation）的机器人动力学方程表示如下：
 $$\mathbf{M(q)} \ddot{\mathbf{q}} + \mathbf{C(q, \dot{q})} \dot{\mathbf{q}} + \mathbf{G(q)} = \mathbf{B} \boldsymbol{\tau} + J_f^T \mathbf{F_f}$$
-
 其中：
-
 - $\mathbf{M(q)} \in \mathbb{R}^{6 \times 6}$ 是惯性矩阵，描述机器人在不同关节角度 $\mathbf{q}$处的**质量**和**惯性**特性，用于描述关节之间的耦合关系，即一个关节的加速度如何影响其他关节的运动。
 - $\mathbf{C(q, \dot{q})} \dot{\mathbf{q}}$ 是科氏力和离心力项，计算机器人运动过程中由于关节间速度耦合产生的力矩；
 - $\mathbf{G(q)}$ 是重力项，由于重力作用，机器人需要施加的平衡力矩；
 - $\mathbf{B}$ 是关节驱动力矩映射矩阵，用于将足端力映射到关节力矩；
 - $\boldsymbol{\tau}$ 是关节力矩，这个力矩由 MPC 计算得到；
-- $\mathbf{F_f} \in \mathbb{R}^3$ 是足底接触力。 $J_f^T$ 是机器人足端的雅可比矩阵的转置，$J_f^T \mathbf{F_f}$ 机器人足端受外力的力矩。
+- $\mathbf{F_f} \in \mathbb{R}^3$ 是足底接触力。 $J_f^T$ 是机器人足端的雅可比矩阵的转置（用于从足端力转换到关节力矩），$J_f^T \mathbf{F_f}$是将机器人足端接触力转换为关节力矩。
+
+在**MPC 规划足底接触力**的过程中，我们通常基于**质心动力学**进行优化，同时结合全身动力学计算关节控制指令。
 
 
 **Python 代码（计算动力学参数）：**
@@ -74,7 +74,7 @@ G = pin.computeGeneralizedGravity(robot.model, robot.data, q)
 
 ## 2. MPC 规划足底接触力
 
-在 MPC 控制框架下，我们希望找到一个最优的足底接触力 $f\mathbf{F_f}$，使机器人跟踪目标速度 $\mathbf{v}_{des}$。
+在 MPC 控制框架下，我们希望找到一个最优的足底接触力 $\mathbf{F_f}$，使机器人跟踪目标速度 $\mathbf{v}_{des}$。
 
 ### 2.1 状态空间模型
 
@@ -84,6 +84,7 @@ $$\mathbf{x} = \begin{bmatrix} \mathbf{q} \\ \dot{\mathbf{q}} \end{bmatrix}, \qu
 $$\mathbf{x}_{k+1} = A \mathbf{x}_k + B \mathbf{u}_k$$
 其中：
 - A, B 由动力学模型线性化后离散化得到。
+- 在MPC（Model Predictive Control）中规划足底接触力时，需要对机器人动力学进行**线性化和离散化**，从而得到状态空间方程的矩阵 A 和 B，使得后续优化问题可以高效求解。
 
 **Python 代码（离散化状态方程）：**
 
@@ -93,7 +94,6 @@ A = np.eye(12) + dt * np.block([[np.zeros((6,6)), np.eye(6)], [np.zeros((6,6)), 
 B = dt * np.block([[np.zeros((6,3))], [np.linalg.inv(M) @ J_foot.T]])
 ```
 
----
 
 ### 2.2 目标函数
 
@@ -168,7 +168,7 @@ tau = J_foot.T @ F_f_opt  # 计算关节力矩
 send_to_robot(tau)  # 发送至机器人控制器
 ```
 
----
+
 
 ## **4. 结论**
 
