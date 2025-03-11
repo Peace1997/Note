@@ -8,7 +8,7 @@
 作用：获取数据并将其压缩成低维表示，然后将其重建为原始形式。
 
 
-# VAE 的实现过程
+# VAE
 
 VAE 之所以叫 "Variational Autoencoder"，就是因为它结合了：
 - **Autoencoder**（自编码器）的结构，用编码器-解码器学习数据表示。
@@ -19,9 +19,9 @@ VAE 的实现与普通 Autoencoder 有一些相似之处，但在细节上有很
    - 与传统 Autoencoder 不同，VAE 的编码器不仅仅是将输入数据压缩为一个固定的潜在表示（例如一个向量），而是生成一个**概率分布**的参数，即潜在空间的均值和方差。
    - 给定输入$x$，编码器生成潜在变量$z$ 的分布参数$\mu$（均值）和$\sigma$（标准差）。
    - 这些参数通常使用神经网络的全连接层来输出，因此，编码器输出的是$\mu (x)$ 和$\sigma (x)$ 两个向量。
+·
 
-
-变分推断：**用一个简单的分布 $q(z|X)$ 来近似复杂的后验分布 $p(z|X)$**。
+变分推断：**用一个简单的分布 $q(z|x)$ 来近似复杂的后验分布 $p(z|x)$**。
 
 ## 重参数化（Reparameterization）
    - 为了从生成的分布中采样潜在变量$z$，VAE 引入了重参数化技巧。
@@ -56,7 +56,7 @@ VAE 通过最大化**变分下界（ELBO）** 来优化。VAE 的损失函数由
 - **AE**：编码器直接输出一个固定的潜在向量 $z$。
 - **VAE**：编码器输出一个概率分布 $q(z|X) = \mathcal{N}(\mu, \sigma^2)$，然后从这个分布中采样 $z$。
 
-VAE（**Variational Autoencoder**）中的 **"Variational"（变分）** 主要来源于 **变分推断（Variational Inference, VI）**，它是一种在概率模型中近似计算复杂分布的方法。在 VAE 里，我们用变分推断来近似计算潜在变量 $z$ 的后验分布 $p(z|X)$，从而使得 VAE 既能进行无监督学习，又能用于生成新数据。VAE 这样做的好处：
+VAE 中的  **Variational（变分）** 主要来源于变分推断，它是一种在概率模型中近似计算复杂分布的方法。在 VAE 里，我们用变分推断来近似计算潜在变量 $z$ 的后验分布 $p(z|x)$，从而使得 VAE 既能进行无监督学习，又能用于生成新数据。VAE 这样做的好处：
 1. 让 $z$ 空间变得更加连续和平滑（避免离散的 $z$）。
 2. 可以通过采样 $z$ 生成新的数据，而不仅仅是记住训练样本。
 3. 避免模型直接把 $z$ 变成一个固定编码，而是通过概率建模更有效地学习潜在空间。
@@ -80,20 +80,22 @@ VAE（**Variational Autoencoder**）中的 **"Variational"（变分）** 主要�
 
 β-VAE 通过**引入一个超参数 $\beta$**，对 KL 散度进行加权，以控制信息瓶颈的强度。其目标函数变为：
 
-$$\mathcal{L}_{\beta} = \mathbb{E}_{q(z|X)} [\log p(X|z)] - \beta D_{KL} (q(z|X) || p(z))$$
+$$\mathcal{L}_{\beta} = \mathbb{E}_{q(z|x)} [\log p(X|z)] - \beta D_{KL} (q(z|x) || p(z))$$
 
 其中：
 
-- **$\beta > 1$**：加大 KL 散度的权重，使得潜在变量更加接近于标准正态分布 $\mathcal{N}(0, I)$，从而增强了**特征解耦性**。
+- **$\beta > 1$**：加大 KL 散度的权重，使得潜在变量更加接近于标准正态分布 $\mathcal{N}(0, I)$，从而增强了特征解耦性。
 - 当 $\beta = 1$，β-VAE 退化为普通 VAE。
 - **$\beta < 1$**（通常不用）：允许更自由的编码，但可能导致潜在变量分布与先验分布差异过大，影响生成效果。
 
+> 对于高斯分布，协方差为 0 就意味着变量是独立的。通过增大$\beta$可以使每个潜在变量**更符合正态分布的独立性假设**，从而让不同的维度分别代表独立的语义特征，而不会混杂在一起。
 
 # Basics
 
 ## 工作原理
 
 ### 1. 数学建模 
+
  **1. 潜在变量模型假设**
 VAE 假设数据 $x$ 是由潜在变量 $z$ 生成的，生成的过程遵循：
 7. 从先验分布 $p(z)$ 中采样潜在变量 $z$   --- Encoder
@@ -101,55 +103,9 @@ VAE 假设数据 $x$ 是由潜在变量 $z$ 生成的，生成的过程遵循：
 
 目标是学习到 $p(z)$ 和  $p_\theta(x|z)$ ，从而可以生成新的数据样本。
 
-### 2. 目标函数
-在 VAE 里，我们有：
+**2. 最大化边际似然估计** [[常用解释#最大化边际似然]]
 
-- **先验分布**：$p(z)$（通常设为 $\mathcal{N}(0, I)$）。
-- **后验分布**：$p(z|x)$，表示在给定数据 $x$ 时，潜在变量 $z$ 的分布。
-- **似然分布**：$p(x|z)$（解码器），表示从 $z$ 生成 $x$ 的概率。
-
-在 VAE 里，$q(z|X)$ 是编码器（Encoder）： $q(z|X) = \mathcal{N}(\mu(X), \sigma^2(X))$它是一个正态分布，其均值 $\mu(X)$ 和标准差 $\sigma(X)$ 由神经网络学习得到。
-
-***1. 后验分布 p(z|x)目标函数***
-
-直接计算后验分布 $p(z|X)$ 非常困难，因为： $p(z|x) = \frac{p(x|z) p(z)}{p(x)}$
-而分母 $p(X) = \int p(X|z) p(z) dz$ 需要计算**所有可能的 $z$ 的积分**，通常是不可行的。
-为此，我们引入一个可调的近似分布 $q(z|X)$，让它尽可能接近真实的后验分布： $q(z|X) \approx p(z|X)$这就是 **变分推断（Variational Inference, VI）** 的核心思想,，即用一个简单的分布 $q(z|X)$ 来近似复杂的后验分布 $p(z|X)$。
-
-为了让 $q(z|X)$ 逼近 $p(z|X)$，我们最小化两者的 **KL 散度（Kullback-Leibler divergence）**： $D_{KL}(q(z|X) || p(z|X))$ 但直接优化它仍然很难，所以我们转换目标，使用 **变分下界（ELBO, Evidence Lower Bound）**
-
-通过最大化**证据下界**（Evidence Lower Bound, ELBO ）对 $logp_\theta(x)$ 进行下界逼近：
-$$\log p_\theta(x) \geq \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))$$
-等价于：
-$$\mathcal{L}(\theta, \phi; x) = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))$$
-- **重构误差 $\log p_\theta(x|z)$ ：** 表示从潜在变量 z 生成数据 x 的准确性。最大化这一项能提升生成数据的质量。
-- **KL 散度 $D_{\text{KL}}(q_\phi(z|x) \| p(z))$** ： 衡量近似分布 $q_\phi(z|x)$ 和先验分布$p(z)$之间的差异。通过最小化这一项，可以使潜在空间中的分布符合先验假设。
-
-最大化 ELBO 同时在优化数据重构能力和正则化潜在空间结构，这正是 VAE 的设计目标。
-
-
------
-$p(z|x)$ 和 $p(x)$ 之间的关系可以从 **贝叶斯公式** 来理解：
-$$p(z|x) = \frac{p(x|z) p(z)}{p(x)}$$
-
-从贝叶斯公式可以看出，**$p(x)$ 充当了一个归一化因子**，确保后验分布 $p(z|X)$ 的总概率为 1：
-$$p(x) = \int p(x|z) p(z) dz$$
-这个积分很难计算，
-- 因为它涉及对所有可能的 $z$ 进行求和（积分），而 $z$ 是一个高维变量。
-- 如果 $p(x|z)$ 是一个复杂的神经网络（如 VAE 的解码器），那么积分 **没有解析解**，只能用数值方法（如蒙特卡洛采样）近似。
-
-直接计算 $p(z|x)$ 难，因此我们**用 $q(z|x)$ 近似 $p(z|x)$**，这就是 **变分推断（Variational Inference, VI）** 的核心思想。
-
-
-**1. 最大化边际似然估计** [[常用解释#最大化边际似然]]
-
-根据潜在变量模型假设的目标，为了尽可能生成我们期望的数据样本，我们需要最小化我们期望的数据真实分布 $p_\mathrm{data}(x)$ 和预测的模型分布 $p_\theta(x)$ 的 KL 散度，即最大化 $\log p_\theta(x)$：
-$$\log p_\theta(x) =\log\int p_\theta (x,z) dz= \log \int p_\theta(x|z)p(z) \, dz$$
-但由于积分难以直接求解，VAE 使用变分推断，尝试逼近。
-
-
-
-目标是找到 **$p(z|x)$**，但由于 $p(x) = \int p(x|z) p(z) dz$ 计算困难，所以我们用一个更简单的分布 **$q(z|x)$** 来近似 $p(z|x)$。
+根据潜在变量模型假设的目标，为了尽可能生成我们期望的数据样本，我们需要最小化我们期望的数据真实分布 $p_\mathrm{data}(x)$ 和预测的模型分布 $p_\theta(x)$ 的 KL 散度，即最大化 $\log p_\theta(x)$。所以，后面所描述的**近似后验分布**以及**证据下界 ELBO** 都是基于这个目标进行学习。
 
 ----
 *目标公式推导*
@@ -158,33 +114,47 @@ $$D_{\mathrm{KL}}(p_{\mathrm{data}}(x)\|p_{\theta}(x))=\mathbb{E}_{p_{\mathrm{da
 由于$\mathbb{E}_{p_\mathrm{data}(x)}[\log p_\mathrm{data}(x)]$是一个常数 (与模型无关), 最小化$D_\mathrm{KL}$等价于最大化期望对数似然：$\mathbb{E}_{p_\text{data}(x)}[\log p_\theta(x)].$。
 
 
+### 2. 目标函数
+在 VAE 里，我们有：
+
+- **先验分布**：$p(z)$，通常设为标准正态分布 $\mathcal{N}(0, I)$。
+- **后验分布**：$p(z|x)$，（编码器）表示在给定数据 $x$ 时，潜在变量 $z$ 的分布。
+- **似然分布**：$p(x|z)$，（解码器）表示从 $z$ 生成 $x$ 的概率。
+
+在 VAE 里，$q(z|x)$ 是编码器（Encoder）： $q(z|x) = \mathcal{N}(\mu(x), \sigma^2(x))$ 。它是一个正态分布，其均值 $\mu(x)$ 和标准差 $\sigma(x)$ 由神经网络学习得到。
 
 
----
-*证据下界推导*
-证据下界用于近似计算数据的边际对数似然$\log p_\theta(x)$，由于直接计算$\log p_\theta(x)$通常非常困难，ELBO 提供了一个可计算的下界，优化 ELBO 可以间接优化 $\log p_\theta(x)$。
+***1. 变分推断***
 
-为了简化计算，引入一个变分分布 $q_\phi(z|x)$，它是对后验分布 $p_\theta(z|x)$ 的一种近似。通过 **对数的性质**，将 $\log p_\theta(x)$ 重写为：
-$$\log p_\theta(x) = \log \int q_\phi(z|x) \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
-由于log 是凹函数，可以使用 **Jensen 不等式** 将其向外移到积分外：
-$$\log \int q_\phi(z|x) \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz \geq \int q_\phi(z|x) \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
+**变分推断（Variational Inference, VI）**：使用近似后验分布 $q(z|x)$ 近似复杂后验分布 $p(z|x)$。
 
-右侧的表达式即为$\log p_\theta(x)$的一个下界，这就是 **证据下界（ELBO）**：
-$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
-或者更直观地写成期望形式：
-$$\mathcal{L}(\theta, \phi) = \mathbb{E}_{z \sim q_\phi(z|x)} \left[ \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \right]$$
+直接计算后验分布 $p(z|x)$ 非常困难，根据贝叶斯定理：
+$$p(z|x) = \frac{p(x|z) p(z)}{p(x)}$$
+对于分母 $p(x) = \int p(x|z) p(z) dz$  需要计算所有可能的 $z$ 的积分，通常是不可行的。
 
-将联合分布 $p_\theta(x, z) = p_\theta(x|z)p_\theta(z)$代入：
-$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log \frac{p_\theta(x|z)p_\theta(z)}{q_\phi(z|x)} \, dz$$
-拆分成两部分：
-$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log p_\theta(x|z) \, dz + \int q_\phi(z|x) \log \frac{p_\theta(z)}{q_\phi(z|x)} \, dz$$
+为此，我们引入一个可调的近似分布 $q(z|x)$，让它尽可能接近真实的后验分布 $p(z|x)$ ： $q(z|x) \approx p(z|x)$ 这就是 **变分推断** 的核心思想，即用一个简单的分布 $q(z|x)$ 来近似复杂的后验分布 $p(z|x)$。
 
-重写为期望形式：
-$$\mathcal{L}(\theta, \phi) = \mathbb{E}_{z \sim q_\phi(z|x)} \left[ \log p_\theta(x|z) \right] - \text{KL}(q_\phi(z|x) \| p_\theta(z))$$
+***2. 变分下界***
 
-VAE 的优化目标是 **最大化 ELBO**，以更好地拟合数据分布并提高生成质量
+**变分下界（ELBO, Evidence Lower Bound）：它在优化数据生成质量的同时，也在学习一个好的潜在表示分布。**
 
-[[常用解释#Jensen 不等式]]
+为了让  $q(z|x)$  逼近 $p(z|x)$，我们可以**最小化两者的 KL 散度**： $D_{KL}(q(z|x) || p(z|x))$ 。
+直接优化 KL 散度是比较困难，所以我们转换目标，使用 变分下界 求解近似后验分布 $q(z|x)$。
+
+在 VAE 中，我们希望最大化数据的**对数边际似然**：
+$$log p(x) = \log \int p(x|z) p(z) dz$$
+由于积分难以计算，我们用变分分布 $q(z|x)$进行近似推理，然后通过ELBO 进行优化：
+$$\log p(X) \geq \mathbb{E}_{q(z|X)} [\log p(X|z)] - D_{KL}(q(z|X) || p(z))$$
+等价于：
+$$\mathcal{L}(\theta, \phi; x) = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x) \| p(z))$$
+- **重构误差 $\log p_\theta(x|z)$ ：** 表示从潜在变量 z 生成数据 x 的准确性。最大化这一项能提升生成数据的质量。
+- **KL 散度 $D_{\text{KL}}(q_\phi(z|x) \| p(z))$** ： 衡量近似分布 $q_\phi(z|x)$ 和先验分布$p(z)$之间的差异。通过最小化这一项，可以使潜在空间中的分布符合先验假设。
+
+这就是 ELBO（变分下界），它是对 $\log p(x)$ 的一个可计算的下界。从公式来看，ELBO 的目标是**最大化对数边际似然的下界**，所以它是在学习 p (x)，但是也间接的优化了$q(z|x)$，因为最大化 ELBO 需要让 $q(z|x)$ 逼近 $p(z|x)$。
+
+最大化 ELBO 同时在优化数据重构能力和正则化潜在空间结构，这正是 VAE 的设计目标。
+
+
 ### 3. 学习过程
 通过先验分布 $p(z)$ 和解码器 $p_\theta(x|z)$ 的组合，能够生成尽可能逼近数据分布 $p(x)$ 的样本。
 
@@ -218,6 +188,47 @@ $$
 在 VAE 中，先验分布 $p(z)$ 是一个人为选择的分布，它是生成模型的一部分，用来描述潜在空间 $z$ 的结构。希望通过先验分布 $p(z)$ 和解码器 $p_\theta(x|z)$ 的组合，能够生成尽可能逼近数据分布 $p(x)$ 的样本。
 
 [[常用解释#先验分布]]
+
+### 4. 公式推导
+
+
+**1. p (z|x) 和 p (x) 之间的关系**
+$p(z|x)$ 和 $p(x)$ 之间的关系可以从  **贝叶斯公式** 来理解：
+$$p(z|x) = \frac{p(x|z) p(z)}{p(x)}$$
+
+从贝叶斯公式可以看出，**$p(x)$ 充当了一个归一化因子**，确保后验分布 $p(z|X)$ 的总概率为 1：
+$$p(x) = \int p(x|z) p(z) dz$$
+这个积分很难计算，
+- 因为它涉及对所有可能的 $z$ 进行求和（积分），而 $z$ 是一个高维变量。
+- 如果 $p(x|z)$ 是一个复杂的神经网络（如 VAE 的解码器），那么积分 **没有解析解**，只能用数值方法（如蒙特卡洛采样）近似。
+
+直接计算 $p(z|x)$ 难，因此我们用 $q(z|x)$ 近似 $p(z|x)$，这就是变分推断（Variational Inference, VI） 的核心思想。
+
+
+**2. ELBO 推导**
+证据下界用于近似计算数据的边际对数似然$\log p_\theta(x)$，由于直接计算$\log p_\theta(x)$通常非常困难，ELBO 提供了一个可计算的下界，优化 ELBO 可以间接优化 $\log p_\theta(x)$。
+
+为了简化计算，引入一个变分分布 $q_\phi(z|x)$，它是对后验分布 $p_\theta(z|x)$ 的一种近似。通过 **对数的性质**，将 $\log p_\theta(x)$ 重写为：
+$$\log p_\theta(x) = \log \int q_\phi(z|x) \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
+由于 log 是凹函数，可以使用 **Jensen 不等式** 将其向外移到积分外：
+$$\log \int q_\phi(z|x) \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz \geq \int q_\phi(z|x) \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
+
+右侧的表达式即为$\log p_\theta(x)$的一个下界，这就是 **证据下界（ELBO）**：
+$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \, dz$$
+或者更直观地写成期望形式：
+$$\mathcal{L}(\theta, \phi) = \mathbb{E}_{z \sim q_\phi(z|x)} \left[ \log \frac{p_\theta(x, z)}{q_\phi(z|x)} \right]$$
+
+将联合分布 $p_\theta(x, z) = p_\theta(x|z)p_\theta(z)$代入：
+$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log \frac{p_\theta(x|z)p_\theta(z)}{q_\phi(z|x)} \, dz$$
+拆分成两部分：
+$$\mathcal{L}(\theta, \phi) = \int q_\phi(z|x) \log p_\theta(x|z) \, dz + \int q_\phi(z|x) \log \frac{p_\theta(z)}{q_\phi(z|x)} \, dz$$
+
+重写为期望形式：
+$$\mathcal{L}(\theta, \phi) = \mathbb{E}_{z \sim q_\phi(z|x)} \left[ \log p_\theta(x|z) \right] - \text{KL}(q_\phi(z|x) \| p_\theta(z))$$
+
+VAE 的优化目标是 **最大化 ELBO**，以更好地拟合数据分布并提高生成质量
+
+[[常用解释#Jensen 不等式]]
 
 ## Autoencoder
 
