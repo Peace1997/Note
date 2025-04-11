@@ -573,6 +573,7 @@ Encoder 评价方法：余弦相似度
 `HiFAR: Multi-Stage Curriculum Learning for High-Dynamics  Humanoid Fall Recovery`   - 2025
 > Tsinghua University && Booster Robotics Technology`
 
+***Abstract***
 本文提出了一个名为 HiFAR 的多阶段课程学习框架，将复杂高维摔倒恢复任务拆分成简单的低维任务，分阶段去训练机器人，从而实现在动态环境下快速自主恢复。
 
 ![[Pasted image 20250329135616.png]]
