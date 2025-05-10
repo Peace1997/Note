@@ -10,8 +10,8 @@
 
 # VAE
 
-VAE 之所以叫 "Variational Autoencoder"，就是因为它结合了：
-- **Autoencoder**（自编码器）的结构，用编码器-解码器学习数据表示。
+VAE 之所以叫 "Variational AutoEncoder"，就是因为它结合了：
+- **AutoEncoder**（自编码器）的结构，用编码器-解码器学习数据表示。
 - **Variational Inference**（变分推断），用于估计潜在变量的后验分布。
 
 VAE 的实现与普通 Autoencoder 有一些相似之处，但在细节上有很大的不同，具体实现步骤如下：
@@ -269,8 +269,8 @@ Autoencoder（自编码器）是一种**无监督学习模型**，通过编码-�
 
 ## PCA
 
-后验分布 （posterior distribution） p (z| x) ：对于给定图像 x ，生成潜在向量 z 的概率。-- 对应 Decoder
-似然分布（likelihood distribution） q (x|z) ：对于给定潜在向量 z ，重建图像 x 的概率。--- 对应Encoder
+后验分布 （posterior distribution） p (z| x) ：对于给定图像 x ，生成潜在向量 z 的概率。-- 对应 Encoder
+似然分布（likelihood distribution） q (x|z) ：对于给定潜在向量 z ，重建图像 x 的概率。--- 对应  Decoder
 
 重参化（reparameterization）
 
