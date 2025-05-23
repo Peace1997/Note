@@ -1,4 +1,25 @@
 
+# HuB: 
+`Learning Extreme Humanoid Balance`  - 2025.5
+***Abstract***
+为解决人形机器人在执行高难度平衡任务的难点，本文提出了一个名为 HuB（Humanoid Balance） 的运动框架。该框架主要包括运动重定向优化、运动平衡策略学习、Sim 2Real 三个模块，更偏向于工程化论文。
+
+***Contribution***：
+- **运动重定向动作优化**：
+	- 初始对齐，将机器人模型与 SMPL 模型的初始姿态进行对齐
+	- 质心过滤：将质心偏移支撑脚中心超过 0.2 m 的轨迹放弃
+	- 足底纠正：将单脚支撑状态的时足底静止不动，避免打滑
+	- 稳定化过渡：扩充复杂平衡任务前后的帧数，即复制参考运动的第一帧和最后一帧，使他们持续时间等于平衡任务的时间。
+- **运动平衡策略学习**：
+	- 松弛化的跟踪目标：并非要求策略严格跟踪参考轨迹，允许策略在参考轨迹附近优化调整，以探索到更稳定的运动模式。
+	- 接触点约束惩罚：避免脚底发生意外滑动
+
+- **Sim 2 Real**：
+	-  局部参考跟踪：因为状态空间中包含质心投影，因此参考数据和机器人在局部坐标系下对齐，
+	- IMU 随机噪声：
+	- 高频扰动：
+
+
 # FLAM: 基于模型的强化学习算法实现稳定姿态
 `FLAM: Foundation Model-Based Body Stabilization for Humanoid  Locomotion and Manipulation` -2025
 > Harbin Institute of Technology && Peng Cheng Laboratory
