@@ -1,6 +1,6 @@
 
 # HuB: 执行复杂平衡任务
-`Learning Extreme Humanoid Balance`  - 2025.5
+`HuB: Learning Extreme Humanoid Balance`  - 2025.5
 ***Abstract***
 为解决人形机器人在执行高难度平衡任务的难点，本文提出了一个名为 HuB（Humanoid Balance） 的运动框架。该框架主要包括运动重定向优化、运动平衡策略学习、Sim 2Real 三个模块，更偏向于工程化论文。
 
@@ -69,3 +69,42 @@ $$
 - $R_S$: 稳定性奖励，引导智能体在完成任务的同时保持身体的稳定性，使其更符合人类的运动模式，即偏风格性奖励。
 - $\lambda$ : 缩放因子，平衡稳定性奖励所占比例，以满足不同任务的需求。
 - $\frac{q}{l_e}$: $q$为特定任务下的期望的回报值，$l_e$为回合步长，$\frac{q}{l_e}$用于估计每一步的期望贡献。
+
+
+
+# ULC：单一策略的全身运动控制
+` ULC: A Unified and Fine-Grained Controller for Humanoid Loco-Manipulation` -2025 
+> 哈尔滨工业大学 && 西湖大学
+
+本文提出了一个名为 ULC （Unified Loco-Manipulation Controller）的全身运动框架，通过单一策略同时协调下肢运动和上肢操作。ULC 提出了包括序列技能学习、残差动作建模、指令多项式插值的方式来实现更高的动作协调性、精度与稳定性。
+
+![[Pasted image 20250717171301.png]]
+
+***Contribution：***
+- **渐进课程学习**（Sequence Skill Acquisition）：任务课程学习和命令课程学习，从简单控制任务开始学习，只有当前课程任务学好后才到下一个任务。
+- **残差动作建模**（residual action modeling）：提高命令跟踪能力，尤其针对手臂关节，对重力进行补偿。
+- **指令多项式插值**（Command Polynomial Interpolation）：实现控制指令平滑过渡
+
+
+
+# UniTracker: 
+`# UniTracker: Learning Universal Whole-Body Motion Tracker for Humanoid Robots` -2025
+> 上海交通大学  && 上海人工智能实验室
+
+本文基于 Teacher-Student 框架提出一个通过单一策略实现全身运动控制的架构，UniTracker 的核心是将条件变分编码器（Conditional Variational Autoencoder ，CVAE)）整合至学生策略中，CVAE 将本体感知数据和参考数据映射成一个潜在变量的分布，再通过解码器几何当前观测和潜在变量分布生成动作。
+
+![[Pasted image 20250718152318.png]]
+
+***Contribution***
+- 条件变分编码器建模：通过 CVAE 的潜在变量捕获从状态观测&参考运动到动作运动的模糊性，提高动作的合理性。
+
+***CVAE 结构***
+- 编码器 $\epsilon (z_t|p_t^{p-deploy}, s_t^{g-deploy})$：接收与教师策略相同的特权信息，描述期望的理论的运动分布
+- 先验分布 $p(z_t|p_t^{p-deploy},s_t^{g-deploy})$ ,条件先验，同时结合自身的状态和参考运动，与直接只结合参考运动的方式相比，生成的语义抽象更符合自身情况。
+- 解码器  $D(a_t|s_t^{p-deploy},z_t)$：动作生成，根据潜在变量和当前观测生成动作
+
+> 编码器、先验分布和解码器是同时学习的
+
+**编码器是被建模为先验分布的残差**：
+- CVAE 的优化目标（ELBO）中会有一个 KL 散度项，它衡量了编码器学到的分布和先验分布的差异，**鼓励编码器学习一个接近先验分布的潜在空间**（编码器被建模为先验分布的残差），这样做的目的是有助于防止编码器学习到一个过于复杂或退化的潜在空间，从而提高泛化性。所以这个项是**在潜在空间的正则化和重构质量**进行进行平衡。
+- 先验分布是可部署的参考信息，编码器输入是更全面的特权信息，KL 散度的作用是确保在特权信息下学到的潜在特征与可部署信息下定义的潜在空间保持一致性和合理性，同时允许编码器通过额外的特权信息进行更精确的调整，这种残差建模进一步强化了这一点，**即编码器学习的是对先验提供的基准的修正**。

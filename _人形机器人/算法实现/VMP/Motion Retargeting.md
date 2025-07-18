@@ -1,4 +1,4 @@
-# AMASS
+# 1. AMASS
 
 ## 概述
 AMASS（**Archive of Motion Capture as Surface Shapes**）是一个**整合了多个 MoCap 数据集**的超大人体运动数据集，使用**SMPL 模型统一格式化表示**。
@@ -37,7 +37,7 @@ $$\mathbf{r} = \theta \cdot \mathbf{n} \in \mathbb{R}^3$$
 >- 没有直接提供姿态旋转矩阵或四元数, 使用时需要先转换为旋转矩阵再输入 SMPL 模型
 
 
-# SMPL
+# 2. SMPL
 
 ## 概述
 SMPL（**Skinned Multi-Person Linear**）是一个**参数化的三维人体网格模型**，它使用少量的形状和姿态参数来表示任意人的3D身体形态与动作。它的核心思想是将人体建模为一个具有以下特征的参数化网格：
@@ -115,7 +115,7 @@ SMPL 模型确实既包含了关节空间的参数，也包含了笛卡尔空间
 
 
 
-# 重定向方法
+# 3. 重定向方法
 
 ## 直接映射法
 

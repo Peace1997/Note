@@ -133,7 +133,11 @@ $$
 
 ## PPO 并行训练
 
+### 实现方式
+
 **DistributedDataParallel (DDP)** 是 PyTorch 官方推荐的多 GPU 训练方式。比传统的 `DataParallel` 更快、更节省显存、更适合多机多卡。
+
+
 
 | 特性       | 说明                                          |
 | ---------- | --------------------------------------------- |
@@ -146,15 +150,22 @@ PPO + DDP 进行并行训练：
 - **分布式采样（Distributed Sampling）**：每个进程采集自己的数据，存储在各自进程的私有内存空间，训练时各自用自己的数据计算梯度。
 - **参数同步（Shared Parameters）**：所有进程的梯度会聚合，参数同步，保证所有进程的模型参数一致。
 	- 所有 GPU **独立计算 loss & backward**
-	- DDP **自动 all-reduce**，平均所有 GPU 的梯度。
+	- DDP **自动 all-reduce**，平均所有 GPU 的梯度，此操作是在所有进程/GPU 上同步聚合的，而不是在一张卡上独立完成的，全部卡同时获得结果。
 	- 每个 GPU 调用 `optimizer.step()` 后，模型参数完全一致。
+
+
+DDP 的设计就是**去中心化、全并行**，避免某卡负载变高。
 
 
 >[! NOTE]
 >
->- **DDP 是同步式分布式训练机制** —— 在反向传播（`loss.backward()`）后，会阻塞（等待）所有进程完成，直到每个进程计算完梯度，才进行参数同步（AllReduce）。**同步训练的本质就是要牺牲一点快的 GPU 的效率，换取算法正确性与全局一致性**。
+>- **DDP 是同步式分布式训练机制** —— 在反向传播后，会阻塞（等待）所有进程完成，直到每个进程计算完梯度，才进行参数同步（AllReduce）。**同步训练的本质就是要牺牲一点快的 GPU 的效率，换取算法正确性与全局一致性**。
 >-  **PPO+DDP 只同步策略和梯度，不同步 episode 数**。不同卡 rollout 的环境随机性决定了 episode 数可以不同，这完全正常。
-    
+>- **ALL-Reduce** 本质上是一种**集合通信操作**，每张卡上的模型权重在更新前完全一致，更新后也保持一致，梯度同步在通信中由 NCCL 实现（所有设备组成一个环，分步传递梯度，聚合后再分发回来，性能取决于最慢的卡）。
+
+
+
+### 调参训练
 
 多卡训练相比于多卡超参数调整可以略有不同：
   ***1. 学习率 (Learning Rate) - 线性缩放法则***
@@ -162,20 +173,22 @@ PPO + DDP 进行并行训练：
 - 例如：单卡 $lr=3e^{-4}$，8卡 DDP 建议试 $lr=2.4e^{-3}$；
 - 但PPO中实际可能需要 **缩小一些（如2-4倍而非8倍）**，避免过大破坏 clip 机制。
 ---
- ***2. rollout 长度 / batch size***
-- PPO必须rollout固定步数，如2048；
-- 多卡后 **总样本量为 $num_envs \times rollout_len \times N$**；
-- 可以尝试减小每卡 rollout 长度，但一般保持一致更保险。
+ ***2. 采样长度 / batch size***
+- 多卡后样本采集数：$num\_step\_per\_env \times num_envs \_len \times N$**；
+- 对于两卡以上，可以尝试将 num_steps_per_env 提升至 64～256
+
 ---
 
 ***3. PPO-specific: clip range, entropy coeff***
 - **clip range（如0.2）**：多卡数据更充足，策略更新 variance 变小，可考虑 **缩小为0.1~0.15**；
 - **entropy coeff（如0.01）**：多卡时探索充分，略微减小 **鼓励收敛**；
 - 但这两项依赖实验调优，不是强规则。
+
 ---
 ***4. 梯度裁剪（gradient clipping）***
 - 多卡梯度加和后，**梯度 norm 可能更大**；
-- 推荐 clip 得更严些（如0.5）避免爆炸。
+- 推荐 clip 得更严些（如 0.5）避免爆炸。
+
 ---
 ****5. 训练轮次（ppo_epochs）***
 - 多卡总样本量充足，可考虑**减少每次 update 的 epoch 数（如从10减为5）**；
@@ -185,6 +198,52 @@ PPO + DDP 进行并行训练：
 ***6. 学习率调度（warmup, cosine decay 等）***
 - 多卡训练通常会在**前几千步warmup**，防止初期大梯度破坏模型；
 - 强烈建议多卡 PPO 配合 warmup。
+
+
+## 解决多任务冲突与灾难性遗忘
+### Curriculum Learning 
+
+
+让策略“先学简单任务” → 再逐步解锁复杂任务；避免 early PPO 被复杂任务干扰导致复杂任务难学的现象。
+
+
+
+### Reward Shaping
+
+让不同难度任务的 reward 设计不同（早期阶段复杂任务 reward 降低，避免复杂任务优势值(Advantage)为负、影响 PPO 更新方向）；后期逐步恢复正常。
+
+
+
+### MoE
+
+**MoE**是一种特殊的网络结构，不是让“单一 policy 负责所有任务”，而是：
+$$\pi(a|s) = \sum_{i=1}^N g_i(s) \cdot \pi_i(a|s)$$
+
+- 有 **N个Expert子Policy网络**（例如：Expert1负责走路，Expert2负责跳跃...）；
+- **Gating network**（门控网络）根据输入状态/latent决定每个expert权重 $g_i(s)$；
+- Policy 实际输出 = 各 expert 加权平均。
+
+Gating 网络根据当前 clip latent $z$或环境状态 $s$，动态选择 Expert：
+$$\text{Gating}(z) \rightarrow [0.9, 0.1, 0.0] \quad \text{（大概率使用 Expert 1）}$$
+
+### EWC
+EWC（Elastic Weight Consolidation）是一种在多任务或持续学习场景下**防止旧任务被遗忘的技术**。其核心思想就是对已经训练好的重要权重施加弹性保护，让后续训练不会轻易改变这些权重。
+
+
+训练目标变为：
+
+$$L(\theta) = L_{\text{PPO}}(\theta) + \frac{\lambda}{2} \sum_i F_i (\theta_i - \theta_i^*)^2$$
+
+其中：
+
+| 符号                       | 含义                                |
+| ------------------------ | --------------------------------- |
+| $L_{\text{PPO}}(\theta)$ | 当前任务（新 clip）的 PPO 损失              |
+| $\theta_i$               | 当前参数第 i 个                         |
+| $\theta_i^*$             | 旧任务（如 simple clip 训练完成后）的权重第 i 个值 |
+| $F_i$                    | 第 i 个参数对旧任务的重要性（近似 Fisher 信息矩阵）   |
+| $\lambda$                | 正则系数（控制 EWC 强度）                   |
+
 
 
 # 五、参考
