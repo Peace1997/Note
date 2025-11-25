@@ -1,9 +1,10 @@
 {
   "cssTheme": "Things",
-  "theme": "moonstone",
+  "theme": "obsidian",
   "textFontFamily": "Times New Roman,Songti SC,宋体",
   "monospaceFontFamily": "",
   "baseFontSize": 18,
   "interfaceFontFamily": "Times,Songti SC,Adobe 宋体 Std,微软雅黑",
-  "accentColor": "#6b97ef"
+  "accentColor": "#6b97ef",
+  "translucency": false
 }

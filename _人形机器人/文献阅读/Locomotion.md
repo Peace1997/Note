@@ -106,19 +106,6 @@ CENet 由一个单编码器和多头解码器架构组成。
 
 
 
-# ASE: 
-
-
-
-
-
-
-
-
-
-
-
-
 # WoCoCo: 序列化接触全身运动控制
 
 **主要思想**
@@ -227,11 +214,6 @@ $$
 ***Sim 2 Real 方法***
 - **Domain randomization**：motor strength and offset, gravity, friction, restitution, noise in joint positions and velocities, and base orientation.
 - **Teacher-Students Learning**：在训练过程中，教师策略和学生策略的动作以固定的周期与环境进行交互，这样可以更有益于减少学生策略与教师-学生策略分布的差异。
-
-
-
-# CTS: 
-
 
 
 # HIL-SERL: 人机协同强化学习
