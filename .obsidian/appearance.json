@@ -1,10 +1,10 @@
 {
   "cssTheme": "Things",
   "theme": "obsidian",
-  "textFontFamily": "Times New Roman,Songti SC,宋体",
+  "textFontFamily": "Times New Roman,Songti SC,宋体,Times",
   "monospaceFontFamily": "",
   "baseFontSize": 18,
-  "interfaceFontFamily": "Times,Songti SC,Adobe 宋体 Std,微软雅黑",
+  "interfaceFontFamily": "Times,Songti SC,Adobe 宋体 Std,微软雅黑,Times New Roman",
   "accentColor": "#6b97ef",
   "translucency": false
 }

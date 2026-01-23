@@ -15,5 +15,6 @@
   "autoPairBrackets": true,
   "attachmentFolderPath": "./img",
   "strictLineBreaks": false,
-  "propertiesInDocument": "visible"
+  "propertiesInDocument": "visible",
+  "spellcheck": false
 }
