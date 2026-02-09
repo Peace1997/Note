@@ -16,5 +16,8 @@
   "attachmentFolderPath": "./img",
   "strictLineBreaks": false,
   "propertiesInDocument": "visible",
-  "spellcheck": false
+  "spellcheck": false,
+  "smartIndentList": true,
+  "autoPairMarkdown": true,
+  "autoConvertHtml": true
 }

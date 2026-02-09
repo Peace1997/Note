@@ -53,7 +53,7 @@
   "EnterTwice": false,
   "TryFixChineseIM": false,
   "PuncRectify": false,
-  "AutoFormatting": true,
+  "AutoFormatting": false,
   "FormattingWhenLineEnd": true,
   "Capitalization": false,
   "EnglishSpace": true,
